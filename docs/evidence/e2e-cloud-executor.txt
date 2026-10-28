@@ -1,0 +1,15 @@
+PVC synthetic web fixture - external authorized cloud executor
+Observed result supplied and verified by parent observer on 2026-10-28.
+This is a structured transcription of executor output, not a locally generated browser log.
+Command: PVC_RUN_BROWSER_E2E=1 python -m unittest discover -s tests -p test_e2e_fixture.py -v
+Python 3.12.14; Playwright 1.62.0; Chromium 154.0.8037.57; SQLite 3.53.1
+stdout: 0 bytes
+stderr: 6 tests reported ok; Ran 6 tests in 4.588s; OK
+exit_code: 0; errors: 0; skips: 0
+Browser journeys: create/rules/persistence/fresh-context/reload; invalid/no-partial; duplicate/preserve-original.
+HTTP integration scenarios: create/readback; rejection/no-partial; duplicate/preserve-original.
+SHA-256 before and after equal:
+server.py d083909052e6fdbfcd15cc372a7c1824d9c4e1e01874b6daf51633b91ae11199
+shop.py e361efb307fcca5ee5a0dd2927a670db51f764407767bfc551809a3d02ea8b8c
+test_e2e_fixture.py 51acd2f55994eb0f46f18d7ef6e0d1984352d366450fd4e63035ad01d54feacc
+Scope: isolated scratch, loopback server, temporary SQLite; no production application tested.

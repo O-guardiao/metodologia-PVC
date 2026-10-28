@@ -1,5 +1,10 @@
 # Validação
 
+## Versão 0.3.0 — foco E2E
+
+Veja [validação E2E e fronteiras](VALIDACAO-E2E.md). Contagens da suíte do pacote
+não comprovam funcionamento ponta a ponta de aplicações externas.
+
 ## Versão 0.2.0 — nuvem
 
 Reconstrução e verificação novas, Linux/Python 3.12.14, 2026-10-28.

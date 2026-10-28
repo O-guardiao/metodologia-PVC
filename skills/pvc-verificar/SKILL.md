@@ -13,6 +13,12 @@ Rode `entry` após promoção e confira a geração; reconcilie o estado PVC e e
 sem converter promoção técnica em aceite operacional. Revisor informado não prova
 independência: registre quem de fato revisou.
 
+**Entrega começa pela jornada E2E**, não pela soma de testes. Defina jornadas críticas,
+cenários/critério e fronteiras reais em [E2E](../../docs/E2E.md). Para interface web,
+exercite navegador → backend → persistência → resultado após recarga. Unitários e
+integração diagnosticam; não substituem as jornadas. Ambiente bloqueado, mock no
+caminho crítico ou cenário faltante mantêm aceite pendente, nunca aprovação por contagem.
+
 1. Assuma papel de auditor e confronte o resultado com critérios e comportamento
    real. A fonte §25.7 exige separação de criação e auditoria: use revisão
    independente quando disponível; se feita pela mesma IA, declare a limitação.

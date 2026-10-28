@@ -130,7 +130,7 @@ class ProjectTests(unittest.TestCase):
         self.state['decisions'].append(other)
         self.persist()
         code, result = self.cli('resume')
-        self.assertEqual(code, 0)
+        self.assertEqual(code, 1)  # Legacy GO has no critical E2E evidence.
         decisions = {d['module']: d for d in result['decisions']}
         self.assertEqual(decisions['save']['reason'], 'Uso local; backup ainda pendente')
         self.assertEqual(decisions['save']['evidence_ids'], [first['id']])
@@ -264,12 +264,22 @@ class ProjectTests(unittest.TestCase):
         self.assertFalse(report['structurally_valid'])
         self.assertIn('operational', report['errors'][0])
 
-    def test_operational_report_allows_structural_decision_only(self):
+    def test_superseding_legacy_approval_with_no_go_allows_revalidation(self):
+        item = self.record(kind='operational')
+        self.decision(item)
+        old = copy.deepcopy(self.state['decisions'][0])
+        old.update(id='D-NOGO', decision='NO_GO', reason='Critical E2E still pending')
+        self.state['decisions'].append(old)
+        self.persist()
+        self.assertTrue(pvc.inspect(self.root, self.state)['structurally_valid'])
+        self.record()
+
+    def test_legacy_operational_report_cannot_replace_critical_e2e(self):
         item = self.record(kind='operational')
         self.decision(item)
         report = pvc.inspect(self.root, self.state)
-        self.assertTrue(report['structurally_valid'])
-        self.assertEqual(report['operational_approval'], 'requires_explicit_review')
+        self.assertFalse(report['structurally_valid'])
+        self.assertIn('E2E', ' '.join(report['errors']))
 
     def test_failed_evidence_cannot_support_go(self):
         item = self.record(kind='operational', result='failed')
@@ -299,7 +309,7 @@ class ProjectTests(unittest.TestCase):
 
     def test_old_decision_does_not_transfer_to_new_evidence(self):
         item = self.record(kind='operational')
-        self.decision(item)
+        self.decision(item, gate='G7')
         self.persist()
         self.record(kind='operational')
         self.assertEqual(pvc.inspect(self.root, self.state)['decisions'][0]['status'], 'stale')

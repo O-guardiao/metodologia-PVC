@@ -44,3 +44,11 @@ Os arquivos `pvc_catalog.py`, `pvc_map_workflow.py` e `pvc_map.py` são implemen
 nova em Python stdlib. Os exemplos são sintéticos, não dados de clientes.
 As fontes técnicas orientadoras estão em FABRICA.md; não há código, serviço ou
 runtime de terceiros incorporado por essa extensão.
+
+## Extensão E2E 0.3.0
+
+Em 2026-10-28, o titular pediu foco em funcionamento ponta a ponta, rejeitando
+contagem de testes isolados como prova de entrega. A classificação/cobertura de
+jornadas, fixtures e procedimentos E2E são implementação nova. Fontes primárias
+aparecem em E2E.md; Playwright/Chromium existentes foram identificados, não instalados.
+SQLite pertence apenas à fixture de aplicação; o catálogo PVC continua JSON/Markdown.

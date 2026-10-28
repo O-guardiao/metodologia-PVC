@@ -14,6 +14,12 @@ executa argv revisado, não sandbox. Teste falho não promove; corrigir exige no
 candidata e repetição das provas. Consulte a [fábrica](../../docs/FABRICA.md) para
 sequência de Git, integrações e telemetria opcional.
 
+**Entrega começa pela jornada E2E**, não pela soma de testes. Defina jornadas críticas,
+cenários/critério e fronteiras reais em [E2E](../../docs/E2E.md). Para interface web,
+exercite navegador → backend → persistência → resultado após recarga. Unitários e
+integração diagnosticam; não substituem as jornadas. Ambiente bloqueado, mock no
+caminho crítico ou cenário faltante mantêm aceite pendente, nunca aprovação por contagem.
+
 1. Confirme a mudança ativa e leia os requisitos, contratos e testes diretamente
    ligados a ela. Reavalie o impacto se encontrar consumidor não registrado.
 2. Implemente o fluxo de ponta a ponta por incrementos verificáveis. Escolha

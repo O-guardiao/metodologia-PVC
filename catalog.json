@@ -41,6 +41,7 @@
     "aceite": "references/aceite.md",
     "handoff": "references/handoff.md",
     "gates": "references/gates.md",
-    "mapeamento": "references/mapeamento.md"
+    "mapeamento": "references/mapeamento.md",
+    "e2e": "docs/E2E.md"
   }
 }

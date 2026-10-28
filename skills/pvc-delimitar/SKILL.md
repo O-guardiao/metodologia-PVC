@@ -11,6 +11,12 @@ código focal. Grave um plano com escopo exato, preservações e testes; execute
 O [procedimento](../../docs/CATALOGO.md) exige baseline Git limpa e versionada.
 Se surgir impacto fora do escopo, interrompa e redelimite; não amplie silenciosamente.
 
+**Entrega começa pela jornada E2E**, não pela soma de testes. Defina jornadas críticas,
+cenários/critério e fronteiras reais em [E2E](../../docs/E2E.md). Para interface web,
+exercite navegador → backend → persistência → resultado após recarga. Unitários e
+integração diagnosticam; não substituem as jornadas. Ambiente bloqueado, mock no
+caminho crítico ou cenário faltante mantêm aceite pendente, nunca aprovação por contagem.
+
 1. Leia o estado atual e [controle de mudança](../../references/mudanca.md).
    Explicite capacidade pretendida, cenário operacional, não objetivos, critérios
    verificáveis e comportamentos que precisam sobreviver.

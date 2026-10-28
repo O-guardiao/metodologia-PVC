@@ -1,7 +1,7 @@
 # metodologia-PVC
 
 **PVC — Protótipo Vertical Comissionável**, em um pacote modular para agentes.
-Pacote **0.2.0** · Fonte metodológica **PVC v1.0**.
+Pacote **0.3.0** · Fonte metodológica **PVC v1.0**.
 
 A IA começa por uma entrada curta, lê uma operação e consulta referências quando
 a tarefa exige. Cada projeto guarda seu estado para continuar em outra sessão.
@@ -104,3 +104,17 @@ a IA a compreender a entrada. Catálogo é declarado, não extração automátic
 todas as funções. Novo clone/worktree exige `relocate --expected-head SHA` com cópia exata e limpa;
 o vínculo local preserva identidade e não renova provas. Não há demonstração de escala de um milhão de linhas,
 CodeGraph, serviço de agentes ou OpenTelemetry instalado.
+
+## Foco de entrega: E2E, não quantidade de testes
+
+A [operação E2E](docs/E2E.md) define jornadas críticas, cenários e critérios antes
+de implementar. Evidências novas classificam nível, cenário, perfil, interface,
+commit, fronteiras reais e simulações. Todas as jornadas críticas precisam de
+provas atuais ponta a ponta; G8/G9 ainda exigem relatório operacional e decisão
+explícita. Unidade/integração ajudam diagnóstico, nunca substituem essa cobertura.
+
+O validador registra legado sem metadados como **não classificado**, sem convertê-lo
+em E2E. Uma API testada não demonstra interface web; essa exige navegador real no
+fluxo. Ambiente indisponível, cenário omitido ou fronteira simulada mantêm aceite
+pendente. Contagens da suíte deste pacote verificam mecanismos da metodologia,
+não que aplicações de clientes estejam funcionando.

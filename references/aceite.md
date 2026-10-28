@@ -2,6 +2,16 @@
 
 Extrato PVC v1.0, seções 10, 15, 17. [Proveniência](../docs/PROVENIENCIA.md).
 
+**Extensão operacional 2026-10-28 — foco E2E.** Para entregar, execute todas as
+jornadas críticas ponta a ponta pelo ponto de entrada alegado, incluindo efeitos
+persistidos e cenários de erro pertinentes. Testes isolados são diagnóstico, não
+substituto do aceite. A [sequência E2E](../docs/E2E.md) explicita configuração,
+fronteiras, cenários, provas e bloqueios. O extrato histórico abaixo é preservado;
+a dispensa de “teste mínimo” na DoD não dispensa E2E crítico nem autoriza declarar
+aceite quando o ambiente está bloqueado. G8/G9 exigem cobertura E2E atual, relatório
+operacional e decisão explícita; legado não classificado não conta como E2E.
+
+
 # 10. Padrão 6 — V-Model, verificação e validação
 
 ## 10.1 Objetivo
@@ -98,7 +108,8 @@ Uma entrega só é concluída se:
 - [ ] Está vinculada a um requisito.
 - [ ] O requisito tem critério de aceite.
 - [ ] O código foi implementado.
-- [ ] O teste mínimo foi criado ou justificadamente dispensado.
+- [ ] O teste mínimo foi criado ou justificadamente dispensado. **Nota da extensão:**
+  isso não dispensa as jornadas críticas E2E; uma exceção mantém seu aceite pendente.
 - [ ] O fluxo principal foi testado.
 - [ ] Pelo menos um fluxo de erro foi testado.
 - [ ] Logs foram verificados.

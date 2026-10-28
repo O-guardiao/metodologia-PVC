@@ -18,8 +18,12 @@ incluindo rollback quando falhar. Limpe dados entre cenários. Para concorrênci
 controle a disputa; para retries, injete falhas nas fronteiras relevantes.
 Registre comando, versão, ambiente e resultados esperados/observados.
 
-**Limites.** Unitários continuam úteis para regras e casos de borda; E2E verificam
-fluxos do ponto de vista do usuário. Integração não substitui nenhum dos dois.
+**Foco da entrega.** Unitários continuam úteis para regras e casos de borda;
+integração diagnostica fronteiras. A entrega exige jornadas críticas E2E do ponto
+de entrada real até o resultado observável/persistido, com cenários de erro
+pertinentes. Um conjunto de integrações não substitui essa execução. Para web UI,
+API-only não comprova a experiência no navegador. Siga a [sequência E2E](../../docs/E2E.md)
+para declarar jornadas, preparar ambiente isolado, executar, registrar e decidir.
 Um teste nem um percentual isolado garante cobertura suficiente. Priorize
 invariantes e riscos do cenário.
 [Pirâmide de testes, Ham Vocke](https://martinfowler.com/articles/practical-test-pyramid.html).
