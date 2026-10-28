@@ -5,6 +5,12 @@ description: Use para delimitar uma nova mudança PVC, aprofundar capacidade ou 
 
 # Delimitar mudança
 
+No mapa, execute `entry` → `query` → `show`; confira dependências declaradas no
+código focal. Grave um plano com escopo exato, preservações e testes; execute
+`pvc_map.py --project <raiz> plan --spec <plano.json>` e `checkpoint` antes de editar.
+O [procedimento](../../docs/CATALOGO.md) exige baseline Git limpa e versionada.
+Se surgir impacto fora do escopo, interrompa e redelimite; não amplie silenciosamente.
+
 1. Leia o estado atual e [controle de mudança](../../references/mudanca.md).
    Explicite capacidade pretendida, cenário operacional, não objetivos, critérios
    verificáveis e comportamentos que precisam sobreviver.

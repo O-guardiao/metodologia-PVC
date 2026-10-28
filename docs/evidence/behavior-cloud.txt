@@ -1,0 +1,9 @@
+test_negative (test_checkout.CheckoutTests.test_negative) ... ok
+test_positive (test_checkout.CheckoutTests.test_positive) ... ok
+test_unit_price (test_checkout.CheckoutTests.test_unit_price) ... ok
+test_zero (test_checkout.CheckoutTests.test_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK

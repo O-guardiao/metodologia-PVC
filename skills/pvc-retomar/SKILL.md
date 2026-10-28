@@ -5,6 +5,12 @@ description: Use ao iniciar sessão PVC, após compactação ou interrupção, o
 
 # Retomar
 
+Antes de retomar código, rode `pvc_map.py --project <raiz> entry`, confira frescor,
+pendências e páginas; depois `query "termos do usuário"` e `show --symbol ID`.
+Leia os índices retornados e somente fontes/consumidores pertinentes. Mapa ausente
+ou obsoleto exige [bootstrap ou reconciliação](../../docs/CATALOGO.md), não varredura
+integral automática. A retomada `.pvc/state.json` não substitui o mapa `.pvc-map`.
+
 1. Leia as instruções locais. Execute `python <pacote>/scripts/pvc.py resume --project <raiz>`.
    Se o estado não existir, inspecione código, docs e trabalho aberto antes de
    `init --project <raiz> --goal "objetivo completo" --version "versão atual"`.

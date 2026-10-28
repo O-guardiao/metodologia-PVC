@@ -5,6 +5,14 @@ description: Use para revalidar fluxos afetados, revisar evidências, comissiona
 
 # Verificar e comissionar
 
+Confira candidata, delta, consumidores, testes reais e lacunas de cobertura.
+No [fluxo do mapa](../../docs/CATALOGO.md), registre `review` somente após provas
+válidas; `promote` cria commit local com código e nova geração, sem push.
+Journal pendente exige inspeção e `recover`, nunca repetição cega ou reset.
+Rode `entry` após promoção e confira a geração; reconcilie o estado PVC e evidências
+sem converter promoção técnica em aceite operacional. Revisor informado não prova
+independência: registre quem de fato revisou.
+
 1. Assuma papel de auditor e confronte o resultado com critérios e comportamento
    real. A fonte §25.7 exige separação de criação e auditoria: use revisão
    independente quando disponível; se feita pela mesma IA, declare a limitação.

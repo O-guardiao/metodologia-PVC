@@ -10,7 +10,12 @@ e as metas de maturidade; o recorte limita a execução atual, não a ambição.
 
 1. Identifique a raiz do projeto e a localização deste pacote. Estado vive em
    `<projeto>/.pvc/state.json`; método e referências vivem neste pacote.
-2. Escolha uma operação. Leia **somente** o SKILL.md escolhido:
+2. Antes de navegar no código, execute `python <pacote>/scripts/pvc_map.py --project <raiz> entry`.
+   Sem catálogo, siga o bootstrap de [catálogo textual](../../docs/CATALOGO.md),
+   sem fingir cobertura completa. Use `query` e `show` para localizar símbolos,
+   consumidores e testes; leia depois apenas código focal e fronteiras afetadas.
+   O receipt prova emissão da entrada, não leitura ou atenção da IA.
+3. Escolha uma operação. Leia **somente** o SKILL.md escolhido:
 
 | Situação | Operação |
 |---|---|
@@ -19,10 +24,10 @@ e as metas de maturidade; o recorte limita a execução atual, não a ambição.
 | Mudança delimitada, critérios e dependências conhecidos | [Executar](../pvc-executar/SKILL.md) |
 | Evidências, integração, aceite operacional ou handoff a conferir | [Verificar](../pvc-verificar/SKILL.md) |
 
-3. Use `python <pacote>/scripts/pvc.py route OPERACAO` para obter os caminhos
+4. Use `python <pacote>/scripts/pvc.py route OPERACAO` para obter os caminhos
    básicos. Acrescente `--topic TEMA` apenas quando o caso acionar aquele tema.
    O comando lista caminhos; não lê o manual nem injeta conteúdo.
-4. Encerre cada operação com estado persistido, próximo passo concreto e incertezas.
+5. Encerre cada operação com estado persistido, próximo passo concreto e incertezas.
 
 Uma ação externa interrompida exige consulta ao destino antes de repetição.
 Evidência de teste não equivale a comissionamento. Abrir outra skill não limpa

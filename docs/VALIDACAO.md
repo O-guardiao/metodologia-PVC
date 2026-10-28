@@ -1,4 +1,12 @@
-# Validação da versão 0.1.1
+# Validação
+
+## Versão 0.2.0 — nuvem
+
+Reconstrução e verificação novas, Linux/Python 3.12.14, 2026-10-28.
+Veja [relatório do catálogo](VALIDACAO-CATALOGO.md). Os resultados abaixo são
+históricos da base 0.1.1, não provas da extensão.
+
+## Histórico: versão 0.1.1
 
 Data: 2026-10-28. Ambiente: Windows, Python 3.14.7, sem bibliotecas externas.
 

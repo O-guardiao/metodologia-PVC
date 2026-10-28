@@ -5,6 +5,15 @@ description: Use para implementar um recorte PVC delimitado com requisitos, crit
 
 # Executar recorte
 
+Use o [fluxo do catálogo](../../docs/CATALOGO.md): checkpoint confirmado → mudanças
+no escopo → catálogo candidato separado → testes executados → revisão → promoção.
+Não edite o índice da baseline durante implementação. Registre propósito, entradas,
+saídas, invariantes, dependências/consumidores e testes dos símbolos afetados;
+incerteza fica explícita. `candidate` valida delta; `test --run-reviewed-tests`
+executa argv revisado, não sandbox. Teste falho não promove; corrigir exige nova
+candidata e repetição das provas. Consulte a [fábrica](../../docs/FABRICA.md) para
+sequência de Git, integrações e telemetria opcional.
+
 1. Confirme a mudança ativa e leia os requisitos, contratos e testes diretamente
    ligados a ela. Reavalie o impacto se encontrar consumidor não registrado.
 2. Implemente o fluxo de ponta a ponta por incrementos verificáveis. Escolha

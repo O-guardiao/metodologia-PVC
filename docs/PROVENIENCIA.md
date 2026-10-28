@@ -33,3 +33,14 @@ Somente cinco temas pertinentes foram adaptados em redação nova: concorrência
 idempotência, autorização, responsabilidades e testes de integração. O anexo bruto,
 estatísticas sem fonte e seus prompts de auditoria não foram publicados nem executados.
 As referências técnicas primárias estão junto às orientações; consultadas em 2026-10-28.
+
+## Extensão textual 0.2.0
+
+Reconstruída em Linux/nuvem a partir da versão pública 0.1.1 e dos requisitos
+do titular de 2026-10-28: índices hierárquicos, relações explícitas por símbolo,
+baseline preservada, candidata e promoção após verificação. A cópia de trabalho
+Windows não foi transferida; seus testes não são evidência desta extensão.
+Os arquivos `pvc_catalog.py`, `pvc_map_workflow.py` e `pvc_map.py` são implementação
+nova em Python stdlib. Os exemplos são sintéticos, não dados de clientes.
+As fontes técnicas orientadoras estão em FABRICA.md; não há código, serviço ou
+runtime de terceiros incorporado por essa extensão.

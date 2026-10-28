@@ -1,7 +1,7 @@
 # metodologia-PVC
 
 **PVC — Protótipo Vertical Comissionável**, em um pacote modular para agentes.
-Pacote **0.1.1** · Fonte metodológica **PVC v1.0**.
+Pacote **0.2.0** · Fonte metodológica **PVC v1.0**.
 
 A IA começa por uma entrada curta, lê uma operação e consulta referências quando
 a tarefa exige. Cada projeto guarda seu estado para continuar em outra sessão.
@@ -11,7 +11,8 @@ A visão completa e a maturidade desejada permanecem explícitas: o fluxo pequen
 ## Instalação local manual
 
 Requisitos: Git e Python 3.10+. Sem dependências Python externas.
-Validado em Windows/Python 3.14. Outros hosts ainda não foram exercitados.
+Base 0.1.1 validada em Windows/Python 3.14. A extensão 0.2.0 foi reconstruída e
+validada separadamente em Linux na nuvem; veja o relatório de validação.
 
 Na raiz do **projeto que usará PVC**:
 
@@ -27,6 +28,7 @@ ao AGENTS.md, preservando regras existentes:
 ```markdown
 Para trabalho PVC, leia .pvc-method/skills/pvc/SKILL.md e apenas a operação escolhida.
 Ao iniciar ou retomar, execute python .pvc-method/scripts/pvc.py resume --project .
+Antes de navegar no código, use pvc_map.py --project . entry; sem mapa, siga docs/CATALOGO.md.
 ```
 
 Essa instrução usa leitura local, sem depender de descoberta automática de skills
@@ -85,3 +87,20 @@ python scripts/pvc.py check-package
 A fonte integral está em references/source, fora das rotas padrão.
 A [licença preexistente](LICENSE) permanece intacta; a proveniência esclarece
 o status do material original do Drive.
+
+## Catálogo textual e operação de IA
+
+[Procedimento executável](docs/CATALOGO.md) · [Fábrica com IA](docs/FABRICA.md).
+O CLI `scripts/pvc_map.py` mantém gerações JSON/Markdown com índices hierárquicos
+e diagramas Mermaid derivados dos mesmos registros. Consulta por aliases e
+paginação evita despejar todo o mapa no contexto; `show` retorna o contrato focal.
+
+Sequência: entrada → consulta → plano → checkpoint Git → alteração delimitada →
+candidata → testes reais → revisão → promoção local → reconciliação. Falhas não
+substituem a baseline. Journal interrompido bloqueia novas ações até recuperação.
+
+Os controles valem para comandos deste CLI, não impedem outro shell nem obrigam
+a IA a compreender a entrada. Catálogo é declarado, não extração automática de
+todas as funções. Novo clone/worktree exige `relocate --expected-head SHA` com cópia exata e limpa;
+o vínculo local preserva identidade e não renova provas. Não há demonstração de escala de um milhão de linhas,
+CodeGraph, serviço de agentes ou OpenTelemetry instalado.
