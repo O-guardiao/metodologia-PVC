@@ -96,10 +96,24 @@ incerto. Negativa requer nova autorização/evidência pertinente. CLI não exec
 ## Códigos e retomada
 
 - 0: registros coerentes sem prova ativa obsoleta.
-- 1: arquivo, estrutura ou decisão inválidos.
+- 1: arquivo, estrutura/decisão inválidos ou retomada degradada por histórico ausente.
 - 2: estrutura coerente com evidência/decisão ativa obsoleta.
 
 Zero não significa testes passados: ausência de prova, falha, bloqueio e ação
 pendente continuam visíveis. Operational_approval sempre exige revisão explícita.
 Resume mostra provas/decisões ativas, objetivo, mudança, bloqueios, maturidade,
-links e próximo passo. Histórico permanece no arquivo.
+links e próximo passo. Decisões incluem módulo, responsável, restrições e IDs de
+evidência. Histórico permanece no arquivo.
+
+Na versão 0.1.1, resume pagina coleções com --limit (padrão 10, máximo 100) e
+--offset; --module NOME seleciona módulos (repetível). O mesmo offset se aplica
+a cada coleção e seus totais/next_offset são explícitos. Blockers, ações e erros
+são globais mesmo ao filtrar módulos. Global_index informa contagens de todo o
+projeto: confira páginas omitidas de alertas antes de agir. Strings acima de 400
+caracteres e listas internas extensas são trechos, com truncations e ponteiro
+para o estado completo. O limite reduz contexto emitido, não trabalho interno.
+
+Artefato histórico superseded ausente produz history_warnings e estado degradado,
+preservando objetivo, próximo passo e ações incertas; nenhuma aprovação é inferida.
+Prova atual ausente fica invalid. Falha na avaliação de entradas permite checkpoint
+com assessment_incomplete, contagens de obsolescência desconhecidas e aceite bloqueado.

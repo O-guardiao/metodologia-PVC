@@ -1,0 +1,197 @@
+--- before/title_rules.py
++++ after/title_rules.py
+@@ -2 +2 @@
+-    if not isinstance(title, str) or not title:
++    if not isinstance(title, str):
+@@ -4 +4,4 @@
+-    return title
++    value = title.strip()
++    if not value:
++        raise ValueError('title required')
++    return value
+--- before/docs/title-contract.md
++++ after/docs/title-contract.md
+@@ -3,2 +3,15 @@
+-Título deve ser texto não vazio. Preservar o texto informado.
+-Método: testes de criação e renomeação, incluindo rejeição e estado após erro.
++Interface Python local: `normalize_title(title)` recebe texto e retorna texto
++com espaços em branco das extremidades removidos (`str.strip()`). Espaços
++internos são preservados: `"  Minha  tarefa  "` retorna `"Minha  tarefa"`.
++Entrada não textual ou vazia após normalização (inclusive somente espaços,
++tabulações ou quebras de linha) gera `ValueError('title required')`.
++
++Criação e renomeação usam esta regra antes de qualquer mutação: salvam e retornam
++o título normalizado. Rejeição preserva todo o catálogo. Continuam válidos
++`ValueError('duplicate task')` na criação duplicada, `KeyError(task_id)` na
++renomeação de ID ausente e retorno como cópia. A ordem de validação permanece.
++
++Sem dependências externas, autenticação, logs ou mocks nesta interface interna.
++Armazenamento atual em memória, sem promessa de durabilidade.
++Método: testes de consumidor em tests/test_create.py e tests/test_rename.py,
++incluindo normalização, rejeição, invariância do catálogo e cópia de retorno.
+--- before/docs/handoff.md
++++ after/docs/handoff.md
+@@ -3,2 +3,24 @@
+-Retomar revisão do contrato de título. Testes locais usam dicionário; isso não representa persistência em produção.
+-A exportação A-001 foi interrompida: consultar outbox/result.json antes de repetir.
++C-001 implementada em lab-1: a regra compartilhada remove espaços periféricos
++com str.strip() e rejeita títulos vazios após normalização. Criação e renomeação
++seguem a regra; ajuda e erros existentes foram preservados.
++
++Em 2026-10-28, `python -m unittest discover -s tests -v` passou: 9 testes,
++incluindo os dois consumidores e ajuda. Saída e ambiente em
++`evidence/C-001-tests.txt`; plano e critérios em `docs/change-C-001.md`.
++Evidências novas registradas para title, create e rename após snapshots;
++evidência independente anterior de help permanece válida. O grafo agora inclui
++rename -> title, dependência confirmada pelo código.
++
++A-001 confirmada por consulta a outbox/result.json (operation_id A-001,
++completed em 2026-10-28T12:00:00Z) e outbox/export-001.json (catálogo vazio,
++export_id export-001). Não repetir a exportação.
++
++Limites: testes locais usam dicionário; não comprovam persistência em produção,
++histórico ou recuperação. Revisão técnica feita pela mesma IA que implementou;
++revisão independente e aceite operacional não foram realizados. Não houve
++promoção de release, gates ou TRL/LOD. O diretório não tem Git, portanto não há
++commit ou diff Git. Pacote .pvc-method e serviços externos não foram alterados.
++
++Próximo passo: revisar independentemente C-001 contra os critérios documentados,
++reexecutando a suíte acima se necessário; depois delimitar persistência durável,
++incluindo falhas e recuperação, mantendo a visão completa e as metas existentes.
+--- before/tests/test_create.py
++++ after/tests/test_create.py
+@@ -1,0 +2 @@
++from copy import deepcopy
+@@ -10,0 +12,24 @@
++
++    def test_normalized_title_is_stored_and_returned(self):
++        store = {}
++        result = create_task(store, 'a', ' \tMinha  tarefa\n ')
++        self.assertEqual(result, {'title': 'Minha  tarefa'})
++        self.assertEqual(store, {'a': {'title': 'Minha  tarefa'}})
++        result['title'] = 'Changed copy'
++        self.assertEqual(store['a']['title'], 'Minha  tarefa')
++
++    def test_invalid_titles_preserve_entire_store(self):
++        for title in ('', '   ', '\t\n', None, 0, [], {}):
++            with self.subTest(title=title):
++                store = {'a': {'title': 'Before', 'extra': ['keep']}}
++                before = deepcopy(store)
++                with self.assertRaisesRegex(ValueError, '^title required$'):
++                    create_task(store, 'b', title)
++                self.assertEqual(store, before)
++
++    def test_duplicate_preserves_entire_store(self):
++        store = {'a': {'title': 'Before'}}
++        before = deepcopy(store)
++        with self.assertRaisesRegex(ValueError, '^duplicate task$'):
++            create_task(store, 'a', '  Replacement  ')
++        self.assertEqual(store, before)
+--- before/tests/test_rename.py
++++ after/tests/test_rename.py
+@@ -1,0 +2 @@
++from copy import deepcopy
+@@ -10,0 +12,26 @@
++
++    def test_normalized_title_is_stored_and_returned(self):
++        store = {'a': {'title': 'Before'}}
++        result = rename_task(store, 'a', ' \tMinha  tarefa\n ')
++        self.assertEqual(result, {'title': 'Minha  tarefa'})
++        self.assertEqual(store, {'a': {'title': 'Minha  tarefa'}})
++        result['title'] = 'Changed copy'
++        self.assertEqual(store['a']['title'], 'Minha  tarefa')
++
++    def test_invalid_titles_preserve_entire_store(self):
++        for title in ('', '   ', '\t\n', None, 0, [], {}):
++            with self.subTest(title=title):
++                store = {'a': {'title': 'Before', 'extra': ['keep']},
++                         'b': {'title': 'Other'}}
++                before = deepcopy(store)
++                with self.assertRaisesRegex(ValueError, '^title required$'):
++                    rename_task(store, 'a', title)
++                self.assertEqual(store, before)
++
++    def test_missing_id_preserves_entire_store(self):
++        store = {'a': {'title': 'Before'}}
++        before = deepcopy(store)
++        with self.assertRaises(KeyError) as error:
++            rename_task(store, 'b', '  Replacement  ')
++        self.assertEqual(error.exception.args, ('b',))
++        self.assertEqual(store, before)
+--- before/.pvc/state.json
++++ after/.pvc/state.json
+@@ -6 +6 @@
+-  "next_step": "Conferir contrato, consumidores e decisão pendente de exportação.",
++  "next_step": "Revisar independentemente C-001 em docs/handoff.md; depois delimitar persistência durável sem promover lab-1 automaticamente.",
+@@ -9 +9 @@
+-    "intent": "Preparar evolução das regras de título.",
++    "intent": "Aprofundar lab-1: remover espaços nas extremidades e rejeitar título em branco na regra compartilhada.",
+@@ -11 +11,3 @@
+-      "create"
++      "title",
++      "create",
++      "rename"
+@@ -17,2 +19,2 @@
+-    "phase": "delimitar",
+-    "next_step": "Conferir contrato, consumidores e decisão pendente de exportação."
++    "phase": "verificar",
++    "next_step": "Revisar independentemente C-001 em docs/handoff.md; depois delimitar persistência durável sem promover lab-1 automaticamente."
+@@ -63 +65,3 @@
+-      "depends_on": [],
++      "depends_on": [
++        "title"
++      ],
+@@ -144,0 +149,42 @@
++    },
++    {
++      "id": "056e2c6f-dec1-4566-b781-cb9090a94f44",
++      "project_id": "62c9d1cb-42cb-43ee-9e4f-a3513a414538",
++      "module": "title",
++      "version": "lab-1",
++      "fingerprint": "59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989",
++      "artifact": "evidence/C-001-tests.txt",
++      "artifact_sha256": "bda4f25e06266773cfe5a2235f6438c4e3cd72c58c5e7b6c208e0c93dfbb410a",
++      "kind": "test",
++      "result": "passed",
++      "environment": "laboratorio local em memoria; Windows; Python 3.14.7",
++      "procedure": "python -m unittest discover -s tests -v",
++      "recorded_at": "2026-10-28T16:19:42.922657+00:00"
++    },
++    {
++      "id": "20666e92-1b41-44cb-8dc7-f2d1ec0f53be",
++      "project_id": "62c9d1cb-42cb-43ee-9e4f-a3513a414538",
++      "module": "create",
++      "version": "lab-1",
++      "fingerprint": "7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2",
++      "artifact": "evidence/C-001-tests.txt",
++      "artifact_sha256": "bda4f25e06266773cfe5a2235f6438c4e3cd72c58c5e7b6c208e0c93dfbb410a",
++      "kind": "test",
++      "result": "passed",
++      "environment": "laboratorio local em memoria; Windows; Python 3.14.7",
++      "procedure": "python -m unittest discover -s tests -v",
++      "recorded_at": "2026-10-28T16:19:44.669827+00:00"
++    },
++    {
++      "id": "77b3df44-14d4-4a52-a7ce-d8023e7e583e",
++      "project_id": "62c9d1cb-42cb-43ee-9e4f-a3513a414538",
++      "module": "rename",
++      "version": "lab-1",
++      "fingerprint": "91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca",
++      "artifact": "evidence/C-001-tests.txt",
++      "artifact_sha256": "bda4f25e06266773cfe5a2235f6438c4e3cd72c58c5e7b6c208e0c93dfbb410a",
++      "kind": "test",
++      "result": "passed",
++      "environment": "laboratorio local em memoria; Windows; Python 3.14.7",
++      "procedure": "python -m unittest discover -s tests -v",
++      "recorded_at": "2026-10-28T16:19:46.335191+00:00"
+@@ -153,3 +199,3 @@
+-      "status": "uncertain",
+-      "verification": "Consultar resultado por operation_id antes de repetir a exportação.",
+-      "next_step": "Verificar resultado no destino local."
++      "status": "confirmed",
++      "verification": "Consultado em 2026-10-28: outbox/result.json identifica operation_id A-001, status completed em 2026-10-28T12:00:00Z e artifact export-001.json; artefato consultado contém tasks vazio e export_id export-001.",
++      "next_step": "Nenhuma repetição: conclusão confirmada no destino local."
+@@ -160 +206,2 @@
+-    "docs/handoff.md"
++    "docs/handoff.md",
++    "docs/change-C-001.md"

@@ -1,0 +1,7 @@
+Trabalhe somente no projeto descartável <fixture>.
+Entrada metodológica: .pvc-method/skills/pvc/SKILL.md.
+Pedido: retome o projeto e ajuste a regra compartilhada de título para remover espaços nas extremidades e rejeitar título composto só por espaços; criação e renomeação devem seguir essa regra. É evolução do recorte atual lab-1, sem promover release. Preserve comportamento de ajuda e os demais compromissos do projeto. Execute as verificações pertinentes e deixe um próximo passo claro.
+Não publique nem use serviços externos; não altere o pacote .pvc-method nem arquivos fora dessa raiz.
+Para registrar esta execução real, toda leitura explícita de conteúdo deve usar python <raiz>/eval_io.py read <caminhos relativos> e comandos devem usar python <raiz>/eval_io.py run -- <comando e argumentos>. Use ferramentas de edição normais para modificar o projeto.
+O helper apenas registra consultas/execuções; não leia .eval nem arquivos de preparação fora da raiz.
+No final informe resultado, arquivos consultados, comandos executados e limitações observadas. Não receba nem procure histórico de conversa anterior.

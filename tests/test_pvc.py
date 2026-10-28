@@ -118,6 +118,103 @@ class ProjectTests(unittest.TestCase):
         self.assertEqual(resumed['project_id'], created['project_id'])
         self.assertEqual(resumed['goal'], 'Operação com persistência')
 
+    def test_resume_preserves_module_and_restrictions_for_two_gate_decisions(self):
+        first = self.record(kind='operational')
+        second = self.record('independent', kind='operational')
+        self.decision(first)
+        self.state['decisions'][0]['decision'] = 'GO_WITH_RESTRICTIONS'
+        self.state['decisions'][0]['reason'] = 'Uso local; backup ainda pendente'
+        other = copy.deepcopy(self.state['decisions'][0])
+        other.update(id='D-002', module='independent', reason='Ajuda revisada', reviewer='second reviewer',
+                     evidence_ids=[second['id']], fingerprint=pvc.fingerprints(self.root, self.state)['independent'])
+        self.state['decisions'].append(other)
+        self.persist()
+        code, result = self.cli('resume')
+        self.assertEqual(code, 0)
+        decisions = {d['module']: d for d in result['decisions']}
+        self.assertEqual(decisions['save']['reason'], 'Uso local; backup ainda pendente')
+        self.assertEqual(decisions['save']['evidence_ids'], [first['id']])
+        self.assertEqual(decisions['independent']['reviewer'], 'second reviewer')
+
+    def test_missing_superseded_artifact_keeps_degraded_checkpoint(self):
+        old = self.record()
+        (self.root / 'new-evidence.txt').write_text('New observed result', encoding='utf-8')
+        pvc.capture(self.root, 'save', 'new-evidence.txt', 'test', 'passed', 'local', 'new verification',
+                    self.state['version'], pvc.fingerprints(self.root, self.state)['save'])
+        (self.root / 'evidence.txt').unlink()
+        code, result = self.cli('resume')
+        self.assertEqual(code, 1)
+        self.assertEqual(result['goal'], self.state['goal'])
+        self.assertEqual(result['next_step'], self.state['next_step'])
+        self.assertEqual(result['pending_actions'][0]['status'], 'uncertain')
+        self.assertIn(old['id'], result['history_warnings'][0])
+        self.assertTrue(result['degraded'])
+        self.assertEqual(result['operational_approval'], 'blocked_degraded_state')
+
+    def test_missing_current_artifact_is_invalid_not_approved(self):
+        item = self.record(kind='operational')
+        self.decision(item)
+        self.persist()
+        (self.root / 'evidence.txt').unlink()
+        code, result = self.cli('resume')
+        self.assertEqual(code, 1)
+        self.assertEqual(result['evidence'][0]['status'], 'invalid')
+        self.assertEqual(result['decisions'][0]['status'], 'stale')
+        self.assertEqual(result['next_step'], self.state['next_step'])
+
+    def test_missing_input_produces_explicit_incomplete_resume(self):
+        (self.root / 'save.py').unlink()
+        code, result = self.cli('resume')
+        self.assertEqual(code, 1)
+        self.assertTrue(result['assessment_incomplete'])
+        self.assertIsNone(result['global_index']['stale_evidence'])
+        self.assertEqual(result['goal'], self.state['goal'])
+        self.assertEqual(result['pending_actions'][0]['status'], 'uncertain')
+
+    def test_large_project_paginates_without_hiding_global_alert_counts(self):
+        for i in range(80):
+            self.state['modules'][f'module-{i}'] = copy.deepcopy(self.state['modules']['independent'])
+        self.state['blockers'] = [f'Critical blocker {i}' for i in range(90)]
+        for i in range(30):
+            action = copy.deepcopy(self.state['pending_actions'][0])
+            action['id'] = f'action-{i}'
+            self.state['pending_actions'].append(action)
+        self.persist()
+        code, result = self.cli('resume', '--limit', '5')
+        self.assertEqual(code, 0)
+        self.assertEqual(len(result['maturity']), 5)
+        self.assertEqual(len(result['blockers']), 5)
+        self.assertEqual(len(result['pending_actions']), 5)
+        self.assertEqual(result['global_index']['modules'], 83)
+        self.assertEqual(result['global_index']['blockers'], 90)
+        self.assertEqual(result['global_index']['uncertain_actions'], 31)
+        self.assertEqual(result['pagination']['blockers']['next_offset'], 5)
+        code, page = self.cli('resume', '--limit', '5', '--offset', '5')
+        self.assertEqual(page['blockers'][0], 'Critical blocker 5')
+
+    def test_module_selection_preserves_global_staleness_signal(self):
+        self.record('save')
+        self.record('independent')
+        (self.root / 'contract.md').write_text('changed', encoding='utf-8')
+        code, result = self.cli('resume', '--module', 'independent')
+        self.assertEqual(code, 2)
+        self.assertEqual(list(result['maturity']), ['independent'])
+        self.assertEqual(result['evidence'][0]['status'], 'current')
+        self.assertEqual(result['global_index']['stale_evidence'], 1)
+
+    def test_long_prose_is_excerpted_with_explicit_pointer(self):
+        self.state['goal'] = 'A' * 8000
+        self.persist()
+        code, result = self.cli('resume')
+        self.assertEqual(code, 0)
+        self.assertLess(len(result['goal']), 500)
+        self.assertIn({'pointer': '/goal', 'omitted_characters': 7600}, result['truncations'])
+
+    def test_invalid_resume_limit_is_rejected(self):
+        code, result = self.cli('resume', '--limit', '0')
+        self.assertEqual(code, 1)
+        self.assertIn('limit', result['error'])
+
     def test_contract_change_invalidates_transitive_consumers_selectively(self):
         self.record('contract')
         self.record('save')

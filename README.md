@@ -1,7 +1,7 @@
 # metodologia-PVC
 
 **PVC — Protótipo Vertical Comissionável**, em um pacote modular para agentes.
-Pacote **0.1.0** · Fonte metodológica **PVC v1.0**.
+Pacote **0.1.1** · Fonte metodológica **PVC v1.0**.
 
 A IA começa por uma entrada curta, lê uma operação e consulta referências quando
 a tarefa exige. Cada projeto guarda seu estado para continuar em outra sessão.
@@ -78,7 +78,7 @@ python scripts/pvc.py check-package
 ```
 
 [Resultados e limites](docs/VALIDACAO.md) ·
-[Protocolo comportamental ainda não executado](evals/retomada.md) ·
+[Ensaio comportamental observado e limites](docs/AVALIACAO-COMPORTAMENTAL.md) ·
 [Harmonização G5–G7](docs/adr/0001-gates.md) ·
 [Proveniência](docs/PROVENIENCIA.md).
 

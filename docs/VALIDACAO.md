@@ -1,4 +1,4 @@
-# Validação da versão 0.1.0
+# Validação da versão 0.1.1
 
 Data: 2026-10-28. Ambiente: Windows, Python 3.14.7, sem bibliotecas externas.
 
@@ -6,7 +6,7 @@ Data: 2026-10-28. Ambiente: Windows, Python 3.14.7, sem bibliotecas externas.
 
 | Verificação | Resultado | Evidência |
 |---|---|---|
-| unittest discover -s tests -v | 39 testes passaram, zero falhas e zero skips | [Saída da suíte](evidence/tests.txt) |
+| unittest discover -s tests -v | 47 testes passaram, zero falhas e zero skips | [Saída da suíte](evidence/tests.txt) |
 | check-package | 5 skills; limite de 500 palavras respeitado; caminhos Markdown locais válidos | CLI reproduzível |
 | Instalação manual em diretório separado | init, resume e route funcionaram, inclusive caminho com espaços e chamada fora do projeto | [Smoke test](evidence/installation.json) |
 | Repetir init | Estado existente preservado | Suíte + smoke test |
@@ -20,14 +20,24 @@ snapshot e registro, artefato adulterado, histórico substituído, links ausente
 ciclos, lock de escrita e caminhos fora da raiz. Também executa o fluxo CLI
 snapshot → record → validate e uma fixture sintética com sucesso/erro.
 
+A revisão de 0.1.0 revelou três lacunas, corrigidas em 0.1.1: decisões resumidas
+sem módulo/restrições; retomada abortada por log histórico ausente; saída crescente
+com todos os módulos. Novos testes cobrem duas decisões/módulos, checkpoint degradado,
+histórico/entrada ausentes, seleção de recorte, 83 módulos/90 blockers/31 ações,
+paginação, alertas globais e trechos longos explicitamente sinalizados.
+
+Um [ensaio real com agente sem histórico](AVALIACAO-COMPORTAMENTAL.md) executou
+retomada e mudança compartilhada numa fixture; 9 testes do produto passaram também
+na reexecução pelo observador. Essa evidência é separada da suíte mecânica.
+
 As primeiras execuções revelaram um diretório temporário restrito pelo sandbox e
 saída não UTF-8 em pipes no Windows. Os testes agora usam scratch local; a saída
 do CLI é UTF-8. Ambos foram corrigidos e a suíte completa passou novamente.
 
 ## Limites e não executado
 
-- Nenhum teste comportamental de LLM ou retomada em sessões reais foi executado.
-  Existe um [protocolo de avaliação](../evals/retomada.md); não há garantia universal.
+- Há um ensaio comportamental observado. Comparação de abordagens, múltiplos modelos
+  e o [protocolo completo](../evals/retomada.md) continuam pendentes; sem garantia universal.
 - A suíte valida mecanismos, não comissionamento de um produto real. A fixture é
   declaradamente sintética. Fundamentos escritos não são alegação de auditoria
   ou correção de apps externos.
@@ -40,6 +50,7 @@ do CLI é UTF-8. Ambos foram corrigidos e a suíte completa passou novamente.
   todos os links históricos externos. Fontes técnicas dos cinco fundamentos
   foram consultadas durante a redação.
 
-Próximo passo: executar o protocolo com sessões novas em um projeto descartável,
-medindo seleção de material, retomada e revalidação, antes de anunciar eficácia
-comportamental ou expandir adaptadores.
+Próximo passo: repetir e comparar o protocolo em sessões novas, medindo seleção,
+retomada e revalidação antes de generalizar eficácia ou expandir adaptadores.
+O campo llm_behavior_tested=false de check-package se refere ao próprio checker:
+ele não executa modelos; o ensaio separado está no relatório comportamental.

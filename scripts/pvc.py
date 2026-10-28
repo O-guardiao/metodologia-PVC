@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PVC 0.1: explicit project state, scoped evidence and selective context paths."""
+"""PVC 0.1.1: explicit project state, scoped evidence and selective context paths."""
 import argparse
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -82,7 +82,7 @@ def validate_shape(state):
     modules = state.get('modules')
     require(isinstance(modules, dict), 'modules deve ser objeto')
     for name, module in modules.items():
-        require(re.fullmatch(r'[a-zA-Z0-9_-]+', name) is not None and isinstance(module, dict), 'Modulo invalido')
+        require(re.fullmatch(r'[a-zA-Z0-9_-]{1,64}', name) is not None and isinstance(module, dict), 'Modulo invalido (nome: 1 a 64 caracteres)')
         for key in ('inputs', 'requirements', 'depends_on'):
             text_list(module, key, name, nonempty=key != 'depends_on')
         for dep in module['depends_on']:
@@ -152,22 +152,30 @@ def inspect(root, state):
     for link in state['links']:
         local_file(root, link)
     prints = fingerprints(root, state)
-    evidence, decisions, errors = [], [], []
+    evidence, decisions, errors, warnings = [], [], [], []
     latest_evidence = {(x['module'], x['kind']): x['id'] for x in state['evidence']}
     latest_decision = {(x['module'], x['gate']): x['id'] for x in state['decisions']}
     for item in state['evidence']:
-        artifact = local_file(root, item['artifact'])
         reasons = []
+        unavailable = False
         if item['version'] != state['version']:
             reasons.append('versao alterada')
         if item['fingerprint'] != prints[item['module']]:
             reasons.append('entradas ou dependencias alteradas')
-        if digest(artifact.read_bytes()) != item['artifact_sha256']:
-            reasons.append('artefato alterado')
-        status = 'stale' if reasons else 'current'
+        try:
+            artifact = local_file(root, item['artifact'])
+            if digest(artifact.read_bytes()) != item['artifact_sha256']:
+                reasons.append('artefato alterado')
+        except (Invalid, OSError) as exc:
+            unavailable = True
+            reasons.append(str(exc))
+        status = 'invalid' if unavailable else ('stale' if reasons else 'current')
         if latest_evidence[(item['module'], item['kind'])] != item['id']:
             status = 'superseded'
-        evidence.append({'id': item['id'], 'module': item['module'], 'kind': item['kind'], 'result': item['result'], 'status': status, 'reasons': reasons})
+        if unavailable:
+            message = f"{item['id']}: artefato indisponivel: {item['artifact']}"
+            (warnings if status == 'superseded' else errors).append(message)
+        evidence.append({'id': item['id'], 'module': item['module'], 'kind': item['kind'], 'result': item['result'], 'artifact': item['artifact'], 'status': status, 'reasons': reasons})
     indexed = {x['id']: x for x in evidence}
     for item in state['decisions']:
         refs = item['evidence_ids']
@@ -183,9 +191,69 @@ def inspect(root, state):
         status = 'stale' if stale else 'current'
         if latest_decision[(item['module'], item['gate'])] != item['id']:
             status = 'superseded'
-        decisions.append({'id': item['id'], 'gate': item['gate'], 'decision': item['decision'], 'status': status})
+        decisions.append({**{key: item[key] for key in ('id', 'module', 'gate', 'decision', 'reason', 'reviewer', 'evidence_ids')}, 'status': status})
     unresolved = [x for x in state['pending_actions'] if x['status'] != 'confirmed']
-    return {'project_id': state['project_id'], 'version': state['version'], 'fingerprints': prints, 'evidence': evidence, 'decisions': decisions, 'pending_actions': unresolved, 'errors': errors, 'structurally_valid': not errors, 'operational_approval': 'requires_explicit_review'}
+    return {'project_id': state['project_id'], 'version': state['version'], 'fingerprints': prints, 'evidence': evidence, 'decisions': decisions, 'pending_actions': unresolved, 'errors': errors, 'history_warnings': warnings, 'degraded': bool(errors or warnings), 'structurally_valid': not errors, 'operational_approval': 'blocked_degraded_state' if errors or warnings else 'requires_explicit_review'}
+
+
+def resume_report(state, report, modules=None, limit=10, offset=0):
+    require(1 <= limit <= 100 and offset >= 0, 'Use limit de 1 a 100 e offset nao negativo')
+    selection = set(modules or state['modules'])
+    require(selection.issubset(state['modules']), 'Filtro contem modulo desconhecido')
+    active_evidence = [x for x in report['evidence'] if x['status'] != 'superseded']
+    active_decisions = [x for x in report['decisions'] if x['status'] != 'superseded']
+    missing = [name for name in state['modules'] if not any(e['module'] == name and e['status'] == 'current' and e['result'] == 'passed' for e in active_evidence)]
+    pagination = {}
+
+    def page(key, items):
+        next_offset = offset + limit if offset + limit < len(items) else None
+        pagination[key] = {'total': len(items), 'offset': offset, 'limit': limit, 'next_offset': next_offset}
+        return items[offset:offset + limit]
+
+    result = {key: report[key] for key in ('project_id', 'version', 'structurally_valid', 'operational_approval', 'degraded')}
+    result.update({'goal': state['goal'], 'active_change': state['active_change'], 'next_step': state['next_step'],
+                   'selection': {'modules': sorted(selection) if modules else 'all'},
+                   'state_pointer': '.pvc/state.json',
+                   'global_index': {'modules': len(state['modules']), 'active_evidence': len(active_evidence),
+                       'active_decisions': len(active_decisions), 'stale_evidence': sum(e['status'] == 'stale' for e in active_evidence),
+                       'stale_decisions': sum(d['status'] == 'stale' for d in active_decisions),
+                       'missing_evidence_modules': len(missing), 'blockers': len(state['blockers']),
+                       'uncertain_actions': sum(a['status'] == 'uncertain' for a in report['pending_actions']),
+                       'pending_or_denied_actions': sum(a['status'] in ('pending', 'denied') for a in report['pending_actions']),
+                       'errors': len(report['errors']), 'history_warnings': len(report['history_warnings'])}})
+    collections = {'evidence': [e for e in active_evidence if e['module'] in selection],
+                   'decisions': [d for d in active_decisions if d['module'] in selection],
+                   'pending_actions': report['pending_actions'], 'blockers': state['blockers'], 'links': state['links'],
+                   'errors': report['errors'], 'history_warnings': report['history_warnings'],
+                   'missing_evidence': [name for name in missing if name in selection]}
+    for key, items in collections.items():
+        result[key] = page(key, items)
+    names = page('maturity', [name for name in state['modules'] if name in selection])
+    result['maturity'] = {name: state['modules'][name]['maturity'] for name in names}
+    result['pagination'] = pagination
+    result['assessment_incomplete'] = report.get('assessment_incomplete', False)
+    if result['assessment_incomplete']:
+        result['global_index']['stale_evidence'] = None
+        result['global_index']['stale_decisions'] = None
+    result['instruction'] = 'Consulte o destino de acoes incertas antes de repetir. Contagens globais incluem itens fora do recorte/pagina. Leia paginas de blockers, acoes e erros antes de agir; use --offset N --limit L e opcional --module NOME. Validacao mecanica nao e aceite operacional.'
+    # Bound long prose and nested lists too; expose every omission with its pointer.
+    truncations = []
+
+    def compact(value, pointer):
+        if isinstance(value, str) and len(value) > 400:
+            truncations.append({'pointer': pointer, 'omitted_characters': len(value) - 400})
+            return value[:400] + ' [trecho; consulte state_pointer]'
+        if isinstance(value, list):
+            if len(value) > limit:
+                truncations.append({'pointer': pointer, 'omitted_items': len(value) - limit})
+            return [compact(item, f'{pointer}/{i}') for i, item in enumerate(value[:limit])]
+        if isinstance(value, dict):
+            return {key: compact(item, f'{pointer}/{key}') for key, item in value.items()}
+        return value
+
+    result = compact(result, '')
+    result['truncations'] = truncations
+    return result
 
 
 def state_path(root):
@@ -300,6 +368,10 @@ def parser():
         command.add_argument('--project', required=True, type=Path)
         if name == 'snapshot':
             command.add_argument('--module', required=True)
+        if name == 'resume':
+            command.add_argument('--module', action='append')
+            command.add_argument('--limit', type=int, default=10)
+            command.add_argument('--offset', type=int, default=0)
         if name == 'init':
             command.add_argument('--goal', required=True)
             command.add_argument('--version', required=True)
@@ -328,18 +400,23 @@ def run(args):
     if args.command == 'record':
         return capture(root, args.module, args.artifact, args.kind, args.result, args.environment, args.procedure, args.observed_version, args.expected_fingerprint), 0
     state = read_json(state_path(root))
-    report = inspect(root, state)
+    try:
+        report = inspect(root, state)
+    except (Invalid, OSError) as exc:
+        if args.command != 'resume':
+            raise
+        validate_shape(state)
+        report = {'project_id': state['project_id'], 'version': state['version'], 'evidence': [], 'decisions': [],
+                  'pending_actions': [a for a in state['pending_actions'] if a['status'] != 'confirmed'],
+                  'errors': [str(exc)], 'history_warnings': [], 'degraded': True, 'structurally_valid': False,
+                  'operational_approval': 'blocked_degraded_state', 'assessment_incomplete': True}
     if args.command == 'snapshot':
         require(args.module in state['modules'], f'Modulo desconhecido: {args.module}')
         return {'project_id': state['project_id'], 'module': args.module, 'version': state['version'], 'fingerprint': report['fingerprints'][args.module], 'instruction': 'Guarde antes de executar a verificacao; use no record apos a execucao.'}, 0
     stale = any(x['status'] == 'stale' for x in report['evidence'] + report['decisions'])
-    code = 1 if report['errors'] else (2 if stale else 0)
+    code = 1 if report['degraded'] else (2 if stale else 0)
     if args.command == 'resume':
-        # A bounded checkpoint lists relevant IDs and paths, never source contents.
-        report = {k: v for k, v in report.items() if k != 'fingerprints'}
-        report['evidence'] = [x for x in report['evidence'] if x['status'] != 'superseded']
-        report['decisions'] = [x for x in report['decisions'] if x['status'] != 'superseded']
-        report.update({'goal': state['goal'], 'active_change': state['active_change'], 'next_step': state['next_step'], 'blockers': state['blockers'], 'links': state['links'], 'maturity': {k: v['maturity'] for k, v in state['modules'].items()}, 'missing_evidence': [name for name in state['modules'] if not any(e['module'] == name and e['status'] == 'current' and e['result'] == 'passed' for e in report['evidence'])], 'instruction': 'Consulte o destino de acoes incertas antes de repetir. Validacao mecanica nao e aceite operacional.'})
+        report = resume_report(state, report, args.module, args.limit, args.offset)
     return report, code
 
 

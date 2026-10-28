@@ -1,4 +1,8 @@
-# Avaliação comportamental — ainda não executada
+# Protocolo de avaliação comportamental
+
+Status: um ensaio delimitado com agente novo foi executado em 2026-10-28.
+[Resultado observado e limites](../docs/AVALIACAO-COMPORTAMENTAL.md).
+O protocolo completo e a comparação entre abordagens abaixo continuam pendentes.
 
 Use projeto descartável e instalação local. Registre modelo, host, versão do pacote,
 tempo, tokens quando disponíveis, commit e arquivos realmente lidos.
@@ -22,5 +26,5 @@ Observe acerto do próximo passo, arquivos lidos, regressões, escopo, revalida�
 preservação da ambição, retrabalho e tempo. Caracteres não equivalem a tokens.
 
 Registre entrada, ação, esperado, observado, evidência, limitações e decisão.
-Uma execução bem-sucedida não garante comportamento universal. Até executar,
-marque NÃO EXECUTADO; a suíte mecânica não substitui este protocolo.
+Uma execução bem-sucedida não garante comportamento universal. Marque cada cenário
+não exercitado como NÃO EXECUTADO; a suíte mecânica não substitui este protocolo.

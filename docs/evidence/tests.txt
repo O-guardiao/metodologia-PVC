@@ -12,10 +12,17 @@ test_failed_evidence_cannot_support_go (test_pvc.ProjectTests.test_failed_eviden
 test_g9_requires_operational_evidence (test_pvc.ProjectTests.test_g9_requires_operational_evidence) ... ok
 test_gate_approval_becomes_stale_after_contract_change (test_pvc.ProjectTests.test_gate_approval_becomes_stale_after_contract_change) ... ok
 test_init_preserves_existing_state (test_pvc.ProjectTests.test_init_preserves_existing_state) ... ok
+test_invalid_resume_limit_is_rejected (test_pvc.ProjectTests.test_invalid_resume_limit_is_rejected) ... ok
+test_large_project_paginates_without_hiding_global_alert_counts (test_pvc.ProjectTests.test_large_project_paginates_without_hiding_global_alert_counts) ... ok
+test_long_prose_is_excerpted_with_explicit_pointer (test_pvc.ProjectTests.test_long_prose_is_excerpted_with_explicit_pointer) ... ok
 test_malformed_json_is_actionable (test_pvc.ProjectTests.test_malformed_json_is_actionable) ... ok
+test_missing_current_artifact_is_invalid_not_approved (test_pvc.ProjectTests.test_missing_current_artifact_is_invalid_not_approved) ... ok
+test_missing_input_produces_explicit_incomplete_resume (test_pvc.ProjectTests.test_missing_input_produces_explicit_incomplete_resume) ... ok
 test_missing_link_or_input_fails (test_pvc.ProjectTests.test_missing_link_or_input_fails) ... ok
 test_missing_state_is_clear_and_does_not_initialize (test_pvc.ProjectTests.test_missing_state_is_clear_and_does_not_initialize) ... ok
+test_missing_superseded_artifact_keeps_degraded_checkpoint (test_pvc.ProjectTests.test_missing_superseded_artifact_keeps_degraded_checkpoint) ... ok
 test_modified_artifact_is_stale (test_pvc.ProjectTests.test_modified_artifact_is_stale) ... ok
+test_module_selection_preserves_global_staleness_signal (test_pvc.ProjectTests.test_module_selection_preserves_global_staleness_signal) ... ok
 test_new_projects_have_distinct_identity_and_no_approval (test_pvc.ProjectTests.test_new_projects_have_distinct_identity_and_no_approval) ... ok
 test_old_decision_does_not_transfer_to_new_evidence (test_pvc.ProjectTests.test_old_decision_does_not_transfer_to_new_evidence) ... ok
 test_operational_report_allows_structural_decision_only (test_pvc.ProjectTests.test_operational_report_allows_structural_decision_only) ... ok
@@ -24,6 +31,7 @@ test_record_rejects_wrong_observed_version (test_pvc.ProjectTests.test_record_re
 test_rejects_absolute_and_traversal_paths (test_pvc.ProjectTests.test_rejects_absolute_and_traversal_paths) ... ok
 test_rejects_external_symlink_path (test_pvc.ProjectTests.test_rejects_external_symlink_path) ... ok
 test_rerun_supersedes_old_evidence_without_losing_history (test_pvc.ProjectTests.test_rerun_supersedes_old_evidence_without_losing_history) ... ok
+test_resume_preserves_module_and_restrictions_for_two_gate_decisions (test_pvc.ProjectTests.test_resume_preserves_module_and_restrictions_for_two_gate_decisions) ... ok
 test_resume_recovers_goal_next_step_and_uncertain_action (test_pvc.ProjectTests.test_resume_recovers_goal_next_step_and_uncertain_action) ... ok
 test_stale_cli_exit_is_distinct_from_invalid_state (test_pvc.ProjectTests.test_stale_cli_exit_is_distinct_from_invalid_state) ... ok
 test_test_success_does_not_commission (test_pvc.ProjectTests.test_test_success_does_not_commission) ... ok
@@ -39,6 +47,6 @@ test_resume_does_not_load_all_reference_files (test_pvc.RoutingTests.test_resume
 test_unknown_topic_fails_without_fallback_to_all (test_pvc.RoutingTests.test_unknown_topic_fails_without_fallback_to_all) ... ok
 
 ----------------------------------------------------------------------
-Ran 39 tests in 6.393s
+Ran 47 tests in 8.635s
 
 OK

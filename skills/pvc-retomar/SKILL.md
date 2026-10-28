@@ -9,8 +9,11 @@ description: Use ao iniciar sessão PVC, após compactação ou interrupção, o
    Se o estado não existir, inspecione código, docs e trabalho aberto antes de
    `init --project <raiz> --goal "objetivo completo" --version "versão atual"`.
    Inicialização não aprova gates nem cria evidência.
-2. Compare o resumo com arquivos reais e status do controle de versão. Leia apenas
-   os documentos ligados à mudança ativa. Consulte [estado](../../docs/ESTADO.md)
+2. Compare o resumo com arquivos reais e status do controle de versão. Selecione
+   o recorte necessário (`--module NOME`). Confira contagens globais e paginação:
+   resolva páginas de bloqueios/ações/erros antes de agir; use `--offset` e `--limit`.
+   Em estado degradado, preserve o checkpoint e repare a lacuna sem assumir aprovação.
+   Leia apenas documentos ligados à mudança ativa. Consulte [estado](../../docs/ESTADO.md)
    quando precisar criar ou corrigir registros. Preserve alterações alheias.
 3. Para cada ação pendente/incerta, confira o destino e registre observado, data
    e próximo passo. Resultado incerto não autoriza repetição. Retome trabalho

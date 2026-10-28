@@ -1,0 +1,838 @@
+{
+  "scenario": "Fresh native agent resumes a title-contract change in a disposable fixture",
+  "base_commit": "00f8c5fecae39251f017c9ba3a5086d7fad4496c",
+  "tested_package_version": "0.1.1 candidate",
+  "agent_context": "fork_turns=none; no previous conversation supplied",
+  "host": "Codex native agent, Windows, Python 3.14.7",
+  "model": "Inherited configuration; exact model identifier not exposed",
+  "token_usage": null,
+  "package_core_hashes": {
+    "scripts/pvc.py": "332ff6acf4f461d633e5925ed973d88e05b209ed9a786be4975acceead085a38",
+    "catalog.json": "382ae6c3fc07e4218f29deff91fd03b1407ba27e0efab9d58d7351aad45bd12a",
+    "skills/pvc/SKILL.md": "f850c26c5f3503142f0ae312bef35a145f81b8c69b8403b5776d695c6c181a16",
+    "skills/pvc-delimitar/SKILL.md": "6703cffa3c474a5e674ef9048e34a4a2c54cc45ea16a0ef4cf5be17538626697",
+    "skills/pvc-executar/SKILL.md": "0575981ddd02aab1695ce598c9a3267cc24347d1610c7377410602b806261879",
+    "skills/pvc-retomar/SKILL.md": "b612d0e2f0913039b47bb1f304a9df4cd1cd32087ff1002dd5aaf36f02fbddd3",
+    "skills/pvc-verificar/SKILL.md": "f5ec0773fe3d1aca9edc215fc0981b6f198b686e5e8c8794ff5edc6132c58efb"
+  },
+  "fixture_package_matches_reviewed_candidate": true,
+  "explicit_reads": [
+    ".pvc-method/skills/pvc/SKILL.md",
+    ".pvc-method/skills/pvc-retomar/SKILL.md",
+    "README.md",
+    "docs/title-contract.md",
+    "docs/vision.md",
+    "docs/handoff.md",
+    ".pvc/state.json",
+    "outbox/result.json",
+    ".pvc-method/skills/pvc-delimitar/SKILL.md",
+    ".pvc-method/docs/ESTADO.md",
+    "title_rules.py",
+    "create_task.py",
+    "rename_task.py",
+    "tests/test_create.py",
+    "tests/test_rename.py",
+    "tests/test_help.py",
+    "help_text.py",
+    "docs/help-contract.md",
+    "outbox/export-001.json",
+    ".pvc-method/references/mudanca.md",
+    ".pvc-method/references/contratos.md",
+    ".pvc-method/skills/pvc-executar/SKILL.md",
+    ".pvc-method/references/fundamentos.md",
+    ".pvc-method/references/fundamentos/testes-integracao.md",
+    ".pvc-method/skills/pvc-verificar/SKILL.md",
+    ".pvc-method/references/aceite.md"
+  ],
+  "read_characters": 34091,
+  "first_event": "2026-10-28T16:16:28.249404+00:00",
+  "last_event": "2026-10-28T16:20:25.904454+00:00",
+  "project_identity_preserved": true,
+  "goal_preserved": true,
+  "version_preserved": true,
+  "historical_manual_read": false,
+  "missing_dependency_restored": true,
+  "independent_help_evidence_unchanged": true,
+  "stale_observed_in_agent_commands": [
+    {
+      "time": "2026-10-28T16:18:06.299269+00:00",
+      "modules": [
+        "rename"
+      ]
+    }
+  ],
+  "pending_actions_after": [
+    {
+      "id": "A-001",
+      "action": "Exportar catálogo",
+      "target": "outbox/result.json",
+      "status": "confirmed",
+      "verification": "Consultado em 2026-10-28: outbox/result.json identifica operation_id A-001, status completed em 2026-10-28T12:00:00Z e artifact export-001.json; artefato consultado contém tasks vazio e export_id export-001.",
+      "next_step": "Nenhuma repetição: conclusão confirmada no destino local."
+    }
+  ],
+  "next_step_after": "Revisar independentemente C-001 em docs/handoff.md; depois delimitar persistência durável sem promover lab-1 automaticamente.",
+  "decisions_after": [],
+  "final_assessment": {
+    "project_id": "62c9d1cb-42cb-43ee-9e4f-a3513a414538",
+    "version": "lab-1",
+    "fingerprints": {
+      "title": "59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989",
+      "create": "7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2",
+      "rename": "91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca",
+      "help": "22818d4fcdd7f02e9da45eac5824371060a8e0f8382431b7d01ea6c2f226a749"
+    },
+    "evidence": [
+      {
+        "id": "98b55e89-7efa-40a4-a8b1-5ed0160c9b64",
+        "module": "title",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/baseline-title.txt",
+        "status": "superseded",
+        "reasons": [
+          "entradas ou dependencias alteradas"
+        ]
+      },
+      {
+        "id": "0cda0846-841b-428c-8f19-9d1bcc44a517",
+        "module": "create",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/baseline-create.txt",
+        "status": "superseded",
+        "reasons": [
+          "entradas ou dependencias alteradas"
+        ]
+      },
+      {
+        "id": "28635f24-5cd8-41cb-adcc-55f9439e5703",
+        "module": "rename",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/baseline-rename.txt",
+        "status": "superseded",
+        "reasons": [
+          "entradas ou dependencias alteradas"
+        ]
+      },
+      {
+        "id": "e139ecd4-5143-4a8e-af63-8320e0d78d28",
+        "module": "help",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/baseline-help.txt",
+        "status": "current",
+        "reasons": []
+      },
+      {
+        "id": "056e2c6f-dec1-4566-b781-cb9090a94f44",
+        "module": "title",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/C-001-tests.txt",
+        "status": "current",
+        "reasons": []
+      },
+      {
+        "id": "20666e92-1b41-44cb-8dc7-f2d1ec0f53be",
+        "module": "create",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/C-001-tests.txt",
+        "status": "current",
+        "reasons": []
+      },
+      {
+        "id": "77b3df44-14d4-4a52-a7ce-d8023e7e583e",
+        "module": "rename",
+        "kind": "test",
+        "result": "passed",
+        "artifact": "evidence/C-001-tests.txt",
+        "status": "current",
+        "reasons": []
+      }
+    ],
+    "decisions": [],
+    "pending_actions": [],
+    "errors": [],
+    "history_warnings": [],
+    "degraded": false,
+    "structurally_valid": true,
+    "operational_approval": "requires_explicit_review"
+  },
+  "observer_test_exit_code": 0,
+  "observer_test_output": "test_duplicate_preserves_entire_store (test_create.CreateTests.test_duplicate_preserves_entire_store) ... ok\ntest_invalid_titles_preserve_entire_store (test_create.CreateTests.test_invalid_titles_preserve_entire_store) ... ok\ntest_normalized_title_is_stored_and_returned (test_create.CreateTests.test_normalized_title_is_stored_and_returned) ... ok\ntest_title_and_rejection (test_create.CreateTests.test_title_and_rejection) ... ok\ntest_help (test_help.HelpTests.test_help) ... ok\ntest_invalid_titles_preserve_entire_store (test_rename.RenameTests.test_invalid_titles_preserve_entire_store) ... ok\ntest_missing_id_preserves_entire_store (test_rename.RenameTests.test_missing_id_preserves_entire_store) ... ok\ntest_normalized_title_is_stored_and_returned (test_rename.RenameTests.test_normalized_title_is_stored_and_returned) ... ok\ntest_title_and_rejection (test_rename.RenameTests.test_title_and_rejection) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.002s\n\nOK\n",
+  "events": [
+    {
+      "kind": "read",
+      "path": ".pvc-method/skills/pvc/SKILL.md",
+      "characters": 1576,
+      "time": "2026-10-28T16:16:28.249404+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/skills/pvc-retomar/SKILL.md",
+      "characters": 1711,
+      "time": "2026-10-28T16:16:34.236731+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "rg",
+        "--files",
+        "--hidden",
+        "-g",
+        "!.git",
+        "-g",
+        "!.eval",
+        "-g",
+        "!.pvc-method"
+      ],
+      "exit_code": 0,
+      "output": "command-002.json",
+      "time": "2026-10-28T16:16:43.866458+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "resume",
+        "--project",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "command-003.json",
+      "time": "2026-10-28T16:16:44.131172+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "README.md",
+      "characters": 222,
+      "time": "2026-10-28T16:16:53.064484+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "docs/title-contract.md",
+      "characters": 152,
+      "time": "2026-10-28T16:16:53.067344+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "docs/vision.md",
+      "characters": 207,
+      "time": "2026-10-28T16:16:53.069337+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "docs/handoff.md",
+      "characters": 211,
+      "time": "2026-10-28T16:16:53.070505+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc/state.json",
+      "characters": 4897,
+      "time": "2026-10-28T16:16:53.071689+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "outbox/result.json",
+      "characters": 113,
+      "time": "2026-10-28T16:16:53.073060+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit_code": 128,
+      "output": "command-010.json",
+      "time": "2026-10-28T16:16:53.120953+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/skills/pvc-delimitar/SKILL.md",
+      "characters": 1549,
+      "time": "2026-10-28T16:16:59.853754+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/docs/ESTADO.md",
+      "characters": 6078,
+      "time": "2026-10-28T16:16:59.855595+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "title_rules.py",
+      "characters": 136,
+      "time": "2026-10-28T16:16:59.858907+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "create_task.py",
+      "characters": 255,
+      "time": "2026-10-28T16:16:59.860592+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "rename_task.py",
+      "characters": 246,
+      "time": "2026-10-28T16:16:59.862471+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "tests/test_create.py",
+      "characters": 348,
+      "time": "2026-10-28T16:16:59.864057+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "tests/test_rename.py",
+      "characters": 392,
+      "time": "2026-10-28T16:16:59.865536+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "tests/test_help.py",
+      "characters": 175,
+      "time": "2026-10-28T16:16:59.866833+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "help_text.py",
+      "characters": 54,
+      "time": "2026-10-28T16:16:59.868481+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "docs/help-contract.md",
+      "characters": 78,
+      "time": "2026-10-28T16:16:59.870225+00:00"
+    },
+    {
+      "kind": "read",
+      "path": "outbox/export-001.json",
+      "characters": 38,
+      "time": "2026-10-28T16:16:59.872046+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/references/mudanca.md",
+      "characters": 1567,
+      "time": "2026-10-28T16:17:08.690106+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "route",
+        "delimitar",
+        "--topic",
+        "contratos"
+      ],
+      "exit_code": 0,
+      "output": "command-023.json",
+      "time": "2026-10-28T16:17:09.043386+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/references/contratos.md",
+      "characters": 3490,
+      "time": "2026-10-28T16:17:19.978259+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/skills/pvc-executar/SKILL.md",
+      "characters": 1689,
+      "time": "2026-10-28T16:17:19.980015+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "validate",
+        "--project",
+        "."
+      ],
+      "exit_code": 2,
+      "output": "command-026.json",
+      "time": "2026-10-28T16:18:06.299269+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/references/fundamentos.md",
+      "characters": 1205,
+      "time": "2026-10-28T16:18:13.395816+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/references/fundamentos/testes-integracao.md",
+      "characters": 1641,
+      "time": "2026-10-28T16:18:48.281318+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        "."
+      ],
+      "exit_code": 2,
+      "output": "command-029.json",
+      "time": "2026-10-28T16:19:09.503527+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "create"
+      ],
+      "exit_code": 0,
+      "output": "command-030.json",
+      "time": "2026-10-28T16:19:17.142757+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "help"
+      ],
+      "exit_code": 0,
+      "output": "command-031.json",
+      "time": "2026-10-28T16:19:17.158933+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "rename"
+      ],
+      "exit_code": 0,
+      "output": "command-032.json",
+      "time": "2026-10-28T16:19:17.194117+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "title"
+      ],
+      "exit_code": 0,
+      "output": "command-033.json",
+      "time": "2026-10-28T16:19:17.249676+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        "-c",
+        "import pathlib, subprocess, sys; command=[sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v']; result=subprocess.run(command, capture_output=True, text=True); output='Python '+sys.version+'\\nCommand: python -m unittest discover -s tests -v\\n'+result.stdout+result.stderr+'\\nExit: '+str(result.returncode)+'\\n'; pathlib.Path('evidence/C-001-tests.txt').write_text(output, encoding='utf-8'); print(output); sys.exit(result.returncode)"
+      ],
+      "exit_code": 0,
+      "output": "command-034.json",
+      "time": "2026-10-28T16:19:31.461345+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "record",
+        "--project",
+        ".",
+        "--module",
+        "title",
+        "--artifact",
+        "evidence/C-001-tests.txt",
+        "--kind",
+        "test",
+        "--result",
+        "passed",
+        "--environment",
+        "laboratorio local em memoria; Windows; Python 3.14.7",
+        "--procedure",
+        "python -m unittest discover -s tests -v",
+        "--observed-version",
+        "lab-1",
+        "--expected-fingerprint",
+        "59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989"
+      ],
+      "exit_code": 0,
+      "output": "command-035.json",
+      "time": "2026-10-28T16:19:42.975393+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "record",
+        "--project",
+        ".",
+        "--module",
+        "create",
+        "--artifact",
+        "evidence/C-001-tests.txt",
+        "--kind",
+        "test",
+        "--result",
+        "passed",
+        "--environment",
+        "laboratorio local em memoria; Windows; Python 3.14.7",
+        "--procedure",
+        "python -m unittest discover -s tests -v",
+        "--observed-version",
+        "lab-1",
+        "--expected-fingerprint",
+        "7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2"
+      ],
+      "exit_code": 0,
+      "output": "command-036.json",
+      "time": "2026-10-28T16:19:44.705760+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "record",
+        "--project",
+        ".",
+        "--module",
+        "rename",
+        "--artifact",
+        "evidence/C-001-tests.txt",
+        "--kind",
+        "test",
+        "--result",
+        "passed",
+        "--environment",
+        "laboratorio local em memoria; Windows; Python 3.14.7",
+        "--procedure",
+        "python -m unittest discover -s tests -v",
+        "--observed-version",
+        "lab-1",
+        "--expected-fingerprint",
+        "91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca"
+      ],
+      "exit_code": 0,
+      "output": "command-037.json",
+      "time": "2026-10-28T16:19:46.370789+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/skills/pvc-verificar/SKILL.md",
+      "characters": 1865,
+      "time": "2026-10-28T16:19:48.005708+00:00"
+    },
+    {
+      "kind": "read",
+      "path": ".pvc-method/references/aceite.md",
+      "characters": 4196,
+      "time": "2026-10-28T16:20:18.683754+00:00"
+    },
+    {
+      "kind": "run",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "validate",
+        "--project",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "command-040.json",
+      "time": "2026-10-28T16:20:25.904454+00:00"
+    }
+  ],
+  "commands": [
+    {
+      "time": "2026-10-28T16:16:43.866458+00:00",
+      "argv": [
+        "rg",
+        "--files",
+        "--hidden",
+        "-g",
+        "!.git",
+        "-g",
+        "!.eval",
+        "-g",
+        "!.pvc-method"
+      ],
+      "exit_code": 0,
+      "stdout": "help_text.py\n.gitignore\nrename_task.py\nREADME.md\ntitle_rules.py\ncreate_task.py\neval_io.py\n__pycache__\\title_rules.cpython-314.pyc\n__pycache__\\rename_task.cpython-314.pyc\n__pycache__\\help_text.cpython-314.pyc\n__pycache__\\create_task.cpython-314.pyc\noutbox\\result.json\noutbox\\export-001.json\ndocs\\help-contract.md\ndocs\\handoff.md\ndocs\\title-contract.md\ndocs\\vision.md\nevidence\\baseline-help.txt\nevidence\\baseline-create.txt\nevidence\\baseline-rename.txt\nevidence\\baseline-title.txt\n.pvc\\state.json\ntests\\test_help.py\ntests\\test_create.py\ntests\\test_rename.py\ntests\\__pycache__\\test_help.cpython-314.pyc\ntests\\__pycache__\\test_create.cpython-314.pyc\ntests\\__pycache__\\test_rename.cpython-314.pyc\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:16:44.131172+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "resume",
+        "--project",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"version\": \"lab-1\",\n  \"structurally_valid\": true,\n  \"operational_approval\": \"requires_explicit_review\",\n  \"degraded\": false,\n  \"goal\": \"Catálogo completo: histórico, persistência durável e recuperação.\",\n  \"active_change\": {\n    \"id\": \"C-001\",\n    \"intent\": \"Preparar evolução das regras de título.\",\n    \"modules\": [\n      \"create\"\n    ],\n    \"preserve\": [\n      \"Rejeição não modifica estado anterior\",\n      \"Ajuda continua disponível\"\n    ],\n    \"phase\": \"delimitar\",\n    \"next_step\": \"Conferir contrato, consumidores e decisão pendente de exportação.\"\n  },\n  \"next_step\": \"Conferir contrato, consumidores e decisão pendente de exportação.\",\n  \"selection\": {\n    \"modules\": \"all\"\n  },\n  \"state_pointer\": \".pvc/state.json\",\n  \"global_index\": {\n    \"modules\": 4,\n    \"active_evidence\": 4,\n    \"active_decisions\": 0,\n    \"stale_evidence\": 0,\n    \"stale_decisions\": 0,\n    \"missing_evidence_modules\": 0,\n    \"blockers\": 0,\n    \"uncertain_actions\": 1,\n    \"pending_or_denied_actions\": 0,\n    \"errors\": 0,\n    \"history_warnings\": 0\n  },\n  \"evidence\": [\n    {\n      \"id\": \"98b55e89-7efa-40a4-a8b1-5ed0160c9b64\",\n      \"module\": \"title\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-title.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"0cda0846-841b-428c-8f19-9d1bcc44a517\",\n      \"module\": \"create\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-create.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"28635f24-5cd8-41cb-adcc-55f9439e5703\",\n      \"module\": \"rename\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-rename.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"e139ecd4-5143-4a8e-af63-8320e0d78d28\",\n      \"module\": \"help\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-help.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    }\n  ],\n  \"decisions\": [],\n  \"pending_actions\": [\n    {\n      \"id\": \"A-001\",\n      \"action\": \"Exportar catálogo\",\n      \"target\": \"outbox/result.json\",\n      \"status\": \"uncertain\",\n      \"verification\": \"Consultar resultado por operation_id antes de repetir a exportação.\",\n      \"next_step\": \"Verificar resultado no destino local.\"\n    }\n  ],\n  \"blockers\": [],\n  \"links\": [\n    \"docs/vision.md\",\n    \"docs/handoff.md\"\n  ],\n  \"errors\": [],\n  \"history_warnings\": [],\n  \"missing_evidence\": [],\n  \"maturity\": {\n    \"title\": {\n      \"trl\": 4,\n      \"trl_target\": 8,\n      \"lod\": 300,\n      \"lod_target\": 400\n    },\n    \"create\": {\n      \"trl\": 4,\n      \"trl_target\": 8,\n      \"lod\": 300,\n      \"lod_target\": 400\n    },\n    \"rename\": {\n      \"trl\": 4,\n      \"trl_target\": 8,\n      \"lod\": 300,\n      \"lod_target\": 400\n    },\n    \"help\": {\n      \"trl\": 4,\n      \"trl_target\": 8,\n      \"lod\": 300,\n      \"lod_target\": 400\n    }\n  },\n  \"pagination\": {\n    \"evidence\": {\n      \"total\": 4,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"decisions\": {\n      \"total\": 0,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"pending_actions\": {\n      \"total\": 1,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"blockers\": {\n      \"total\": 0,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"links\": {\n      \"total\": 2,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"errors\": {\n      \"total\": 0,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"history_warnings\": {\n      \"total\": 0,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"missing_evidence\": {\n      \"total\": 0,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    },\n    \"maturity\": {\n      \"total\": 4,\n      \"offset\": 0,\n      \"limit\": 10,\n      \"next_offset\": null\n    }\n  },\n  \"assessment_incomplete\": false,\n  \"instruction\": \"Consulte o destino de acoes incertas antes de repetir. Contagens globais incluem itens fora do recorte/pagina. Leia paginas de blockers, acoes e erros antes de agir; use --offset N --limit L e opcional --module NOME. Validacao mecanica nao e aceite operacional.\",\n  \"truncations\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:16:53.120953+00:00",
+      "argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: not a git repository (or any of the parent directories): .git\n"
+    },
+    {
+      "time": "2026-10-28T16:17:09.043386+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "route",
+        "delimitar",
+        "--topic",
+        "contratos"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"operation\": \"delimitar\",\n  \"paths\": [\n    \"skills/pvc-delimitar/SKILL.md\",\n    \"references/mudanca.md\",\n    \"references/contratos.md\"\n  ],\n  \"package_root\": \"<fixture>\\\\.pvc-method\",\n  \"loads_content\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:18:06.299269+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "validate",
+        "--project",
+        "."
+      ],
+      "exit_code": 2,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"version\": \"lab-1\",\n  \"fingerprints\": {\n    \"title\": \"00693437c4ade8da358e9ce9438c984236a6dfdb8a8f6e32c858444de321e663\",\n    \"create\": \"f42924aef6f317ebd5a72e4ba5b6fa541f8f0ffb0bdec7343debef33d0561d50\",\n    \"rename\": \"a2381bce7056c49fe9ff70035b74aaff1194114aa2833ac603f97dc667a26dd6\",\n    \"help\": \"22818d4fcdd7f02e9da45eac5824371060a8e0f8382431b7d01ea6c2f226a749\"\n  },\n  \"evidence\": [\n    {\n      \"id\": \"98b55e89-7efa-40a4-a8b1-5ed0160c9b64\",\n      \"module\": \"title\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-title.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"0cda0846-841b-428c-8f19-9d1bcc44a517\",\n      \"module\": \"create\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-create.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"28635f24-5cd8-41cb-adcc-55f9439e5703\",\n      \"module\": \"rename\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-rename.txt\",\n      \"status\": \"stale\",\n      \"reasons\": [\n        \"entradas ou dependencias alteradas\"\n      ]\n    },\n    {\n      \"id\": \"e139ecd4-5143-4a8e-af63-8320e0d78d28\",\n      \"module\": \"help\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-help.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    }\n  ],\n  \"decisions\": [],\n  \"pending_actions\": [],\n  \"errors\": [],\n  \"history_warnings\": [],\n  \"degraded\": false,\n  \"structurally_valid\": true,\n  \"operational_approval\": \"requires_explicit_review\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:09.503527+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        "."
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "usage: pvc.py snapshot [-h] --project PROJECT --module MODULE\npvc.py snapshot: error: the following arguments are required: --module\n"
+    },
+    {
+      "time": "2026-10-28T16:19:17.142757+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "create"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"create\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2\",\n  \"instruction\": \"Guarde antes de executar a verificacao; use no record apos a execucao.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:17.158933+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "help"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"help\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"22818d4fcdd7f02e9da45eac5824371060a8e0f8382431b7d01ea6c2f226a749\",\n  \"instruction\": \"Guarde antes de executar a verificacao; use no record apos a execucao.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:17.194117+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "rename"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"rename\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca\",\n  \"instruction\": \"Guarde antes de executar a verificacao; use no record apos a execucao.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:17.249676+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "snapshot",
+        "--project",
+        ".",
+        "--module",
+        "title"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"title\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989\",\n  \"instruction\": \"Guarde antes de executar a verificacao; use no record apos a execucao.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:31.461345+00:00",
+      "argv": [
+        "python",
+        "-c",
+        "import pathlib, subprocess, sys; command=[sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v']; result=subprocess.run(command, capture_output=True, text=True); output='Python '+sys.version+'\\nCommand: python -m unittest discover -s tests -v\\n'+result.stdout+result.stderr+'\\nExit: '+str(result.returncode)+'\\n'; pathlib.Path('evidence/C-001-tests.txt').write_text(output, encoding='utf-8'); print(output); sys.exit(result.returncode)"
+      ],
+      "exit_code": 0,
+      "stdout": "Python 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]\nCommand: python -m unittest discover -s tests -v\ntest_duplicate_preserves_entire_store (test_create.CreateTests.test_duplicate_preserves_entire_store) ... ok\ntest_invalid_titles_preserve_entire_store (test_create.CreateTests.test_invalid_titles_preserve_entire_store) ... ok\ntest_normalized_title_is_stored_and_returned (test_create.CreateTests.test_normalized_title_is_stored_and_returned) ... ok\ntest_title_and_rejection (test_create.CreateTests.test_title_and_rejection) ... ok\ntest_help (test_help.HelpTests.test_help) ... ok\ntest_invalid_titles_preserve_entire_store (test_rename.RenameTests.test_invalid_titles_preserve_entire_store) ... ok\ntest_missing_id_preserves_entire_store (test_rename.RenameTests.test_missing_id_preserves_entire_store) ... ok\ntest_normalized_title_is_stored_and_returned (test_rename.RenameTests.test_normalized_title_is_stored_and_returned) ... ok\ntest_title_and_rejection (test_rename.RenameTests.test_title_and_rejection) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.001s\n\nOK\n\nExit: 0\n\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:42.975393+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "record",
+        "--project",
+        ".",
+        "--module",
+        "title",
+        "--artifact",
+        "evidence/C-001-tests.txt",
+        "--kind",
+        "test",
+        "--result",
+        "passed",
+        "--environment",
+        "laboratorio local em memoria; Windows; Python 3.14.7",
+        "--procedure",
+        "python -m unittest discover -s tests -v",
+        "--observed-version",
+        "lab-1",
+        "--expected-fingerprint",
+        "59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"id\": \"056e2c6f-dec1-4566-b781-cb9090a94f44\",\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"title\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989\",\n  \"artifact\": \"evidence/C-001-tests.txt\",\n  \"artifact_sha256\": \"bda4f25e06266773cfe5a2235f6438c4e3cd72c58c5e7b6c208e0c93dfbb410a\",\n  \"kind\": \"test\",\n  \"result\": \"passed\",\n  \"environment\": \"laboratorio local em memoria; Windows; Python 3.14.7\",\n  \"procedure\": \"python -m unittest discover -s tests -v\",\n  \"recorded_at\": \"2026-10-28T16:19:42.922657+00:00\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:44.705760+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "record",
+        "--project",
+        ".",
+        "--module",
+        "create",
+        "--artifact",
+        "evidence/C-001-tests.txt",
+        "--kind",
+        "test",
+        "--result",
+        "passed",
+        "--environment",
+        "laboratorio local em memoria; Windows; Python 3.14.7",
+        "--procedure",
+        "python -m unittest discover -s tests -v",
+        "--observed-version",
+        "lab-1",
+        "--expected-fingerprint",
+        "7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"id\": \"20666e92-1b41-44cb-8dc7-f2d1ec0f53be\",\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"create\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2\",\n  \"artifact\": \"evidence/C-001-tests.txt\",\n  \"artifact_sha256\": \"bda4f25e06266773cfe5a2235f6438c4e3cd72c58c5e7b6c208e0c93dfbb410a\",\n  \"kind\": \"test\",\n  \"result\": \"passed\",\n  \"environment\": \"laboratorio local em memoria; Windows; Python 3.14.7\",\n  \"procedure\": \"python -m unittest discover -s tests -v\",\n  \"recorded_at\": \"2026-10-28T16:19:44.669827+00:00\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:19:46.370789+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "record",
+        "--project",
+        ".",
+        "--module",
+        "rename",
+        "--artifact",
+        "evidence/C-001-tests.txt",
+        "--kind",
+        "test",
+        "--result",
+        "passed",
+        "--environment",
+        "laboratorio local em memoria; Windows; Python 3.14.7",
+        "--procedure",
+        "python -m unittest discover -s tests -v",
+        "--observed-version",
+        "lab-1",
+        "--expected-fingerprint",
+        "91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"id\": \"77b3df44-14d4-4a52-a7ce-d8023e7e583e\",\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"module\": \"rename\",\n  \"version\": \"lab-1\",\n  \"fingerprint\": \"91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca\",\n  \"artifact\": \"evidence/C-001-tests.txt\",\n  \"artifact_sha256\": \"bda4f25e06266773cfe5a2235f6438c4e3cd72c58c5e7b6c208e0c93dfbb410a\",\n  \"kind\": \"test\",\n  \"result\": \"passed\",\n  \"environment\": \"laboratorio local em memoria; Windows; Python 3.14.7\",\n  \"procedure\": \"python -m unittest discover -s tests -v\",\n  \"recorded_at\": \"2026-10-28T16:19:46.335191+00:00\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "time": "2026-10-28T16:20:25.904454+00:00",
+      "argv": [
+        "python",
+        ".pvc-method/scripts/pvc.py",
+        "validate",
+        "--project",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"project_id\": \"62c9d1cb-42cb-43ee-9e4f-a3513a414538\",\n  \"version\": \"lab-1\",\n  \"fingerprints\": {\n    \"title\": \"59bb0ade80957c1043cbc75bbaed6a647a4f3c5f14bf9e99131af19ef0d43989\",\n    \"create\": \"7ce891566b8ed2d55987e21432155b29252c4493465b8bdd2377fe0891d5b1c2\",\n    \"rename\": \"91ac37c77a6b36b9fc16502c36a01fc8b6be265adc173e4a64f0153cf0f85aca\",\n    \"help\": \"22818d4fcdd7f02e9da45eac5824371060a8e0f8382431b7d01ea6c2f226a749\"\n  },\n  \"evidence\": [\n    {\n      \"id\": \"98b55e89-7efa-40a4-a8b1-5ed0160c9b64\",\n      \"module\": \"title\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-title.txt\",\n      \"status\": \"superseded\",\n      \"reasons\": [\n        \"entradas ou dependencias alteradas\"\n      ]\n    },\n    {\n      \"id\": \"0cda0846-841b-428c-8f19-9d1bcc44a517\",\n      \"module\": \"create\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-create.txt\",\n      \"status\": \"superseded\",\n      \"reasons\": [\n        \"entradas ou dependencias alteradas\"\n      ]\n    },\n    {\n      \"id\": \"28635f24-5cd8-41cb-adcc-55f9439e5703\",\n      \"module\": \"rename\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-rename.txt\",\n      \"status\": \"superseded\",\n      \"reasons\": [\n        \"entradas ou dependencias alteradas\"\n      ]\n    },\n    {\n      \"id\": \"e139ecd4-5143-4a8e-af63-8320e0d78d28\",\n      \"module\": \"help\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/baseline-help.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"056e2c6f-dec1-4566-b781-cb9090a94f44\",\n      \"module\": \"title\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/C-001-tests.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"20666e92-1b41-44cb-8dc7-f2d1ec0f53be\",\n      \"module\": \"create\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/C-001-tests.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    },\n    {\n      \"id\": \"77b3df44-14d4-4a52-a7ce-d8023e7e583e\",\n      \"module\": \"rename\",\n      \"kind\": \"test\",\n      \"result\": \"passed\",\n      \"artifact\": \"evidence/C-001-tests.txt\",\n      \"status\": \"current\",\n      \"reasons\": []\n    }\n  ],\n  \"decisions\": [],\n  \"pending_actions\": [],\n  \"errors\": [],\n  \"history_warnings\": [],\n  \"degraded\": false,\n  \"structurally_valid\": true,\n  \"operational_approval\": \"requires_explicit_review\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "limitations": [
+    "Single run; no statistical or cross-model claim",
+    "Fixture prepared programmatically, not by a previous agent session",
+    "Caller explicitly named creation and renaming",
+    "Read logging is cooperative instrumentation, not an OS sandbox",
+    "No comparison against full-manual or skills-only baselines",
+    "No paid API, global installation or external product audit"
+  ]
+}
