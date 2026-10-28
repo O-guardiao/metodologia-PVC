@@ -1,0 +1,1 @@
+FIXTURE SINTETICA, nao comissionamento real. Save e erro verificados no cenario de teste.

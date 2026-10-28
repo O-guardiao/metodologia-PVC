@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "operations": {
+    "retomar": {
+      "skill": "skills/pvc-retomar/SKILL.md",
+      "references": [
+        "docs/ESTADO.md"
+      ]
+    },
+    "delimitar": {
+      "skill": "skills/pvc-delimitar/SKILL.md",
+      "references": [
+        "references/mudanca.md"
+      ]
+    },
+    "executar": {
+      "skill": "skills/pvc-executar/SKILL.md",
+      "references": ["references/fundamentos.md"]
+    },
+    "verificar": {
+      "skill": "skills/pvc-verificar/SKILL.md",
+      "references": [
+        "references/aceite.md",
+        "references/fundamentos.md"
+      ]
+    }
+  },
+  "topics": {
+    "concorrencia": "references/fundamentos/concorrencia.md",
+    "idempotencia": "references/fundamentos/idempotencia.md",
+    "autorizacao": "references/fundamentos/autorizacao.md",
+    "responsabilidades": "references/fundamentos/responsabilidades.md",
+    "testes-integracao": "references/fundamentos/testes-integracao.md",
+    "operacao": "references/operacao.md",
+    "contratos": "references/contratos.md",
+    "maturidade": "references/maturidade.md",
+    "riscos": "references/riscos.md",
+    "mocks": "references/mocks.md",
+    "aceite": "references/aceite.md",
+    "handoff": "references/handoff.md",
+    "gates": "references/gates.md"
+  }
+}

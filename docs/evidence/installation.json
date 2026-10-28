@@ -1,0 +1,9 @@
+{
+  "installation_smoke": "passed",
+  "path_with_spaces": true,
+  "invoked_outside_project": true,
+  "existing_state_preserved": true,
+  "global_installation": false,
+  "selected_topic_only": true,
+  "llm_behavior_tested": false
+}

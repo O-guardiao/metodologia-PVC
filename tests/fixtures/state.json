@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "project_id": "fixture-project-a",
+  "goal": "Produto completo com persistência, histórico e operação recuperável.",
+  "version": "1.0",
+  "next_step": "Validar persistência e rejeição de entrada inválida.",
+  "active_change": {
+    "id": "C-001",
+    "intent": "Evoluir persistência preservando dados anteriores",
+    "modules": [
+      "save"
+    ],
+    "preserve": [
+      "R-001 rejeita título vazio"
+    ],
+    "phase": "verificar",
+    "next_step": "Executar testes de salvar e recuperar."
+  },
+  "modules": {
+    "contract": {
+      "inputs": [
+        "contract.md"
+      ],
+      "requirements": [
+        "R-001"
+      ],
+      "depends_on": [],
+      "maturity": {
+        "trl": 4,
+        "trl_target": 8,
+        "lod": 300,
+        "lod_target": 400
+      }
+    },
+    "save": {
+      "inputs": [
+        "save.py",
+        "config.json"
+      ],
+      "requirements": [
+        "R-001"
+      ],
+      "depends_on": [
+        "contract"
+      ],
+      "maturity": {
+        "trl": 4,
+        "trl_target": 8,
+        "lod": 300,
+        "lod_target": 400
+      }
+    },
+    "independent": {
+      "inputs": [
+        "unrelated.md"
+      ],
+      "requirements": [
+        "R-002"
+      ],
+      "depends_on": [],
+      "maturity": {
+        "trl": 2,
+        "trl_target": 7,
+        "lod": 100,
+        "lod_target": 400
+      }
+    }
+  },
+  "evidence": [],
+  "decisions": [],
+  "pending_actions": [
+    {
+      "id": "A-001",
+      "action": "Publicar pacote de demonstração",
+      "target": "destino fictício de teste",
+      "status": "uncertain",
+      "verification": "Consultar versão existente no destino",
+      "next_step": "Registrar resultado da consulta antes de repetir"
+    }
+  ],
+  "links": [
+    "handoff.md"
+  ],
+  "blockers": [
+    "Resultado da publicação ainda desconhecido"
+  ]
+}

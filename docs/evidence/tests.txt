@@ -1,0 +1,44 @@
+test_actual_fixture_behavior_and_failure (test_pvc.ProjectTests.test_actual_fixture_behavior_and_failure) ... ok
+test_broken_evidence_reference_fails (test_pvc.ProjectTests.test_broken_evidence_reference_fails) ... ok
+test_cli_init_then_resume_with_unicode_goal (test_pvc.ProjectTests.test_cli_init_then_resume_with_unicode_goal) ... ok
+test_cli_snapshot_record_validate_roundtrip (test_pvc.ProjectTests.test_cli_snapshot_record_validate_roundtrip) ... ok
+test_configuration_change_invalidates_module (test_pvc.ProjectTests.test_configuration_change_invalidates_module) ... ok
+test_contract_change_invalidates_transitive_consumers_selectively (test_pvc.ProjectTests.test_contract_change_invalidates_transitive_consumers_selectively) ... ok
+test_duplicate_ids_and_invalid_schema_fail_cleanly (test_pvc.ProjectTests.test_duplicate_ids_and_invalid_schema_fail_cleanly) ... ok
+test_evidence_cannot_be_its_own_input (test_pvc.ProjectTests.test_evidence_cannot_be_its_own_input) ... ok
+test_evidence_for_wrong_module_cannot_approve (test_pvc.ProjectTests.test_evidence_for_wrong_module_cannot_approve) ... ok
+test_evidence_from_other_project_is_rejected (test_pvc.ProjectTests.test_evidence_from_other_project_is_rejected) ... ok
+test_failed_evidence_cannot_support_go (test_pvc.ProjectTests.test_failed_evidence_cannot_support_go) ... ok
+test_g9_requires_operational_evidence (test_pvc.ProjectTests.test_g9_requires_operational_evidence) ... ok
+test_gate_approval_becomes_stale_after_contract_change (test_pvc.ProjectTests.test_gate_approval_becomes_stale_after_contract_change) ... ok
+test_init_preserves_existing_state (test_pvc.ProjectTests.test_init_preserves_existing_state) ... ok
+test_malformed_json_is_actionable (test_pvc.ProjectTests.test_malformed_json_is_actionable) ... ok
+test_missing_link_or_input_fails (test_pvc.ProjectTests.test_missing_link_or_input_fails) ... ok
+test_missing_state_is_clear_and_does_not_initialize (test_pvc.ProjectTests.test_missing_state_is_clear_and_does_not_initialize) ... ok
+test_modified_artifact_is_stale (test_pvc.ProjectTests.test_modified_artifact_is_stale) ... ok
+test_new_projects_have_distinct_identity_and_no_approval (test_pvc.ProjectTests.test_new_projects_have_distinct_identity_and_no_approval) ... ok
+test_old_decision_does_not_transfer_to_new_evidence (test_pvc.ProjectTests.test_old_decision_does_not_transfer_to_new_evidence) ... ok
+test_operational_report_allows_structural_decision_only (test_pvc.ProjectTests.test_operational_report_allows_structural_decision_only) ... ok
+test_record_rejects_input_change_after_test_started (test_pvc.ProjectTests.test_record_rejects_input_change_after_test_started) ... ok
+test_record_rejects_wrong_observed_version (test_pvc.ProjectTests.test_record_rejects_wrong_observed_version) ... ok
+test_rejects_absolute_and_traversal_paths (test_pvc.ProjectTests.test_rejects_absolute_and_traversal_paths) ... ok
+test_rejects_external_symlink_path (test_pvc.ProjectTests.test_rejects_external_symlink_path) ... ok
+test_rerun_supersedes_old_evidence_without_losing_history (test_pvc.ProjectTests.test_rerun_supersedes_old_evidence_without_losing_history) ... ok
+test_resume_recovers_goal_next_step_and_uncertain_action (test_pvc.ProjectTests.test_resume_recovers_goal_next_step_and_uncertain_action) ... ok
+test_stale_cli_exit_is_distinct_from_invalid_state (test_pvc.ProjectTests.test_stale_cli_exit_is_distinct_from_invalid_state) ... ok
+test_test_success_does_not_commission (test_pvc.ProjectTests.test_test_success_does_not_commission) ... ok
+test_unknown_dependency_and_cycle_fail (test_pvc.ProjectTests.test_unknown_dependency_and_cycle_fail) ... ok
+test_unrelated_module_change_preserves_evidence (test_pvc.ProjectTests.test_unrelated_module_change_preserves_evidence) ... ok
+test_version_change_requires_revalidation (test_pvc.ProjectTests.test_version_change_requires_revalidation) ... ok
+test_write_lock_prevents_conflicting_mutation (test_pvc.ProjectTests.test_write_lock_prevents_conflicting_mutation) ... ok
+test_execution_loads_skill_and_trigger_index_only (test_pvc.RoutingTests.test_execution_loads_skill_and_trigger_index_only) ... ok
+test_fundamentals_are_loaded_individually_when_selected (test_pvc.RoutingTests.test_fundamentals_are_loaded_individually_when_selected) ... ok
+test_only_requested_topics_are_added (test_pvc.RoutingTests.test_only_requested_topics_are_added) ... ok
+test_package_links_and_skill_budget (test_pvc.RoutingTests.test_package_links_and_skill_budget) ... ok
+test_resume_does_not_load_all_reference_files (test_pvc.RoutingTests.test_resume_does_not_load_all_reference_files) ... ok
+test_unknown_topic_fails_without_fallback_to_all (test_pvc.RoutingTests.test_unknown_topic_fails_without_fallback_to_all) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 6.393s
+
+OK
